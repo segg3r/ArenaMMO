@@ -14,6 +14,7 @@ import by.segg3r.slicktest.logic.Renderable;
 import by.segg3r.slicktest.logic.renderable.RenderableCircle;
 import by.segg3r.slicktest.logic.renderable.RenderableOffset;
 import by.segg3r.slicktest.logic.renderable.RenderablePath;
+import by.segg3r.slicktest.logic.storage.AnimationStorage;
 import by.segg3r.slicktest.math.GameMath;
 import by.segg3r.slicktest.math.Offset;
 import by.segg3r.slicktest.math.Point;
@@ -24,7 +25,6 @@ public class SlickTestGame extends BasicGame implements Renderable {
 	private RenderableOffset activeOffset;
 	private RenderablePath renderablePath;
 	private RenderableCircle renderableCircle;
-
 	public SlickTestGame(String title) {
 		super(title);
 		this.renderables = new ArrayList<Renderable>();
@@ -49,6 +49,7 @@ public class SlickTestGame extends BasicGame implements Renderable {
 		if (renderableCircle != null) {
 			renderableCircle.render(g);
 		}
+		AnimationStorage.getCharacterAnimation("res/img/001-Fighter01.png").draw(100, 100);
 	}
 
 	@Override
