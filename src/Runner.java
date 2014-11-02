@@ -11,6 +11,8 @@ public class Runner {
 			AppGameContainer appGameContainer = new AppGameContainer(slickTestGame);
 			appGameContainer.setDisplayMode(800, 600, false);
 			
+			//wtf mthf
+			
 			appGameContainer.start();
 		} catch (SlickException e) {
 			e.printStackTrace();
