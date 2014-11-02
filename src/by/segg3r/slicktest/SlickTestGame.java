@@ -55,7 +55,7 @@ public class SlickTestGame extends BasicGame implements Renderable {
 		Point mousePoint = new Point(mouseX, mouseY);
 		activeOffset = Arena.get().isPointInArena(mousePoint) ? new RenderableOffset(Arena.get().getOffsetByPoint(mousePoint)) : null;
 		
-		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON) && activeOffset != null) {
 			renderablePath = new RenderablePath(GameMath.getPath(new Offset(0, 0), activeOffset));
 		}
 	}
