@@ -11,6 +11,7 @@ import org.newdawn.slick.SlickException;
 
 import by.segg3r.slicktest.logic.Arena;
 import by.segg3r.slicktest.logic.Renderable;
+import by.segg3r.slicktest.logic.renderable.RenderableCircle;
 import by.segg3r.slicktest.logic.renderable.RenderableOffset;
 import by.segg3r.slicktest.logic.renderable.RenderablePath;
 import by.segg3r.slicktest.math.GameMath;
@@ -22,6 +23,7 @@ public class SlickTestGame extends BasicGame implements Renderable {
 	private List<Renderable> renderables;
 	private RenderableOffset activeOffset;
 	private RenderablePath renderablePath;
+	private RenderableCircle renderableCircle;
 
 	public SlickTestGame(String title) {
 		super(title);
@@ -44,6 +46,9 @@ public class SlickTestGame extends BasicGame implements Renderable {
 		if (renderablePath != null) {
 			renderablePath.render(g);
 		}
+		if (renderableCircle != null) {
+			renderableCircle.render(g);
+		}
 	}
 
 	@Override
@@ -57,6 +62,7 @@ public class SlickTestGame extends BasicGame implements Renderable {
 		
 		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON) && activeOffset != null) {
 			renderablePath = new RenderablePath(GameMath.getPath(new Offset(0, 0), activeOffset));
+			renderableCircle = new RenderableCircle(activeOffset, 2);
 		}
 	}
 
