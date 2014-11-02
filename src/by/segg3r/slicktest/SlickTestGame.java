@@ -11,12 +11,13 @@ import org.newdawn.slick.SlickException;
 
 import by.segg3r.slicktest.logic.Arena;
 import by.segg3r.slicktest.logic.Renderable;
-import by.segg3r.slicktest.logic.renderable.RenderableCircle;
-import by.segg3r.slicktest.logic.renderable.RenderableOffset;
-import by.segg3r.slicktest.logic.renderable.RenderablePath;
+import by.segg3r.slicktest.logic.Updatable;
+import by.segg3r.slicktest.logic.arenaobjects.Char;
 import by.segg3r.slicktest.logic.storage.AnimationStorage;
+import by.segg3r.slicktest.math.Circle;
 import by.segg3r.slicktest.math.GameMath;
 import by.segg3r.slicktest.math.Offset;
+import by.segg3r.slicktest.math.Path;
 import by.segg3r.slicktest.math.Point;
 
 public class SlickTestGame extends BasicGame implements Renderable {
@@ -24,12 +25,15 @@ public class SlickTestGame extends BasicGame implements Renderable {
 	private AnimationStorage charactersAnimationStorage = new AnimationStorage("/res/img/characters/");
 	
 	private List<Renderable> renderables;
-	private RenderableOffset activeOffset;
-	private RenderablePath renderablePath;
-	private RenderableCircle renderableCircle;
+	private List<Updatable> updatables;
+	private Offset activeOffset;
+	private Circle renderableCircle;
+	private Char character;
+	
 	public SlickTestGame(String title) {
 		super(title);
 		this.renderables = new ArrayList<Renderable>();
+		this.updatables = new ArrayList<Updatable>();
 	}
 
 	@Override
@@ -42,18 +46,14 @@ public class SlickTestGame extends BasicGame implements Renderable {
 	@Override
 	public void render(GameContainer gameContainer, Graphics g)
 			throws SlickException {
-		render(g);
-
 		if (activeOffset != null) {
 			activeOffset.render(g);
-		}
-		if (renderablePath != null) {
-			renderablePath.render(g);
 		}
 		if (renderableCircle != null) {
 			renderableCircle.render(g);
 		}
-		charactersAnimationStorage.getAnimation("001-Fighter01").draw(30, 30);
+		
+		render(g);
 	}
 
 	@Override
@@ -63,11 +63,19 @@ public class SlickTestGame extends BasicGame implements Renderable {
 		int mouseX = input.getMouseX();
 		int mouseY = input.getMouseY();
 		Point mousePoint = new Point(mouseX, mouseY);
-		activeOffset = Arena.get().isPointInArena(mousePoint) ? new RenderableOffset(Arena.get().getOffsetByPoint(mousePoint)) : null;
+		activeOffset = Arena.get().isPointInArena(mousePoint) ? Arena.get().getOffsetByPoint(mousePoint) : null;
 		
-		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON) && activeOffset != null) {
-			renderablePath = new RenderablePath(GameMath.getPath(new Offset(0, 0), activeOffset));
-			renderableCircle = new RenderableCircle(activeOffset, 2);
+		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON) && activeOffset != null) {			
+			if (character == null) {
+				character = new Char(activeOffset, charactersAnimationStorage.getAnimation("001-Fighter01"));
+				updatables.add(character);
+				renderables.add(character);
+			}
+			character.setPath(GameMath.getPath(Arena.get().getOffsetByPoint(character.getPosition()), activeOffset));
+		}
+		
+		for (Updatable updatable : updatables) {
+			updatable.update(delta / 1000.);
 		}
 	}
 

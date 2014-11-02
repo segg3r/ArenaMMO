@@ -9,6 +9,7 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 import by.segg3r.slicktest.logic.Arena;
+import by.segg3r.slicktest.logic.arenaobjects.SideDirection;
 import by.segg3r.slicktest.math.paths.OffsetDistanceComparator;
 import by.segg3r.slicktest.math.paths.OffsetSequenceItem;
 
@@ -79,8 +80,11 @@ public class GameMath {
 		do {
 			path.addOffset(item.getOffset());
 			item = item.getPreviousOffsetSequenceItem();
-		} while (item.getPreviousOffsetSequenceItem() != null);
-		path.addOffset(item.getOffset());
+		} while (item != null && item.getPreviousOffsetSequenceItem() != null);
+		if (item != null) {
+			path.addOffset(item.getOffset());
+		}
+		path.reverse();
 
 		return path;
 	}
@@ -119,6 +123,22 @@ public class GameMath {
 			}
 		}
 		return result;
+	}
+
+	public static SideDirection getSideDirection(double direction) {
+		if ((direction > Math.PI * -1. / 4. && direction <= 0) || (direction < Math.PI * 1. / 4. && direction >= 0)) {
+			return SideDirection.RIGHT;
+		} else if ((direction >= Math.PI * 3. / 4. && direction <= Math.PI) || (direction < Math.PI * -3. / 4. && direction >= -Math.PI)) {
+			return SideDirection.LEFT;
+		} else if (direction >= Math.PI * 1. / 4. && direction < Math.PI * 3. / 4.) {
+			return SideDirection.DOWN;
+		} else {
+			return SideDirection.UP;
+		}
+	}
+	
+	public static double getPointDirection(Point p1, Point p2) {
+		return Math.atan2(p2.getY() - p1.getY(), p2.getX() - p1.getX());
 	}
 
 }

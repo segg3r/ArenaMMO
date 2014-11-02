@@ -44,7 +44,7 @@ public class AnimationStorage {
 		int columnWidth = image.getWidth() / columns;
 		int rowHeight = image.getHeight() / rows;
 		SpriteSheet spriteSheet = new SpriteSheet(image, columnWidth, rowHeight);
-		Animation animation = new Animation(spriteSheet, 20);
+		Animation animation = new Animation(spriteSheet, 250);
 		
 		animations.put(animationName, animation);
 	}
