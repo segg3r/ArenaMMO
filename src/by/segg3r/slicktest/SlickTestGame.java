@@ -17,12 +17,11 @@ import by.segg3r.slicktest.logic.storage.AnimationStorage;
 import by.segg3r.slicktest.math.Circle;
 import by.segg3r.slicktest.math.GameMath;
 import by.segg3r.slicktest.math.Offset;
-import by.segg3r.slicktest.math.Path;
 import by.segg3r.slicktest.math.Point;
 
 public class SlickTestGame extends BasicGame implements Renderable {
 
-	private AnimationStorage charactersAnimationStorage = new AnimationStorage("/res/img/characters/");
+	private AnimationStorage charactersAnimationStorage = new AnimationStorage("res/img/characters/");
 	
 	private List<Renderable> renderables;
 	private List<Updatable> updatables;
