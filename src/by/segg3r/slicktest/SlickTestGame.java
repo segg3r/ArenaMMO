@@ -21,6 +21,8 @@ import by.segg3r.slicktest.math.Point;
 
 public class SlickTestGame extends BasicGame implements Renderable {
 
+	private AnimationStorage charactersAnimationStorage = new AnimationStorage("/res/img/characters/");
+	
 	private List<Renderable> renderables;
 	private RenderableOffset activeOffset;
 	private RenderablePath renderablePath;
@@ -32,6 +34,8 @@ public class SlickTestGame extends BasicGame implements Renderable {
 
 	@Override
 	public void init(GameContainer gameContainer) throws SlickException {
+		charactersAnimationStorage.loadAnimations();
+		
 		addRenderable(Arena.get());
 	}
 
@@ -49,7 +53,7 @@ public class SlickTestGame extends BasicGame implements Renderable {
 		if (renderableCircle != null) {
 			renderableCircle.render(g);
 		}
-		AnimationStorage.getCharacterAnimation("res/img/001-Fighter01.png").draw(100, 100);
+		charactersAnimationStorage.getAnimation("001-Fighter01").draw(30, 30);
 	}
 
 	@Override
