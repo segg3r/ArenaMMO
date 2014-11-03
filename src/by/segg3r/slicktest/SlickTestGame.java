@@ -15,6 +15,7 @@ import by.segg3r.slicktest.logic.Updatable;
 import by.segg3r.slicktest.logic.arenaobjects.Char;
 import by.segg3r.slicktest.logic.storage.AnimationStorage;
 import by.segg3r.slicktest.math.Circle;
+import by.segg3r.slicktest.math.Line;
 import by.segg3r.slicktest.math.Offset;
 import by.segg3r.slicktest.math.Point;
 
@@ -27,6 +28,8 @@ public class SlickTestGame extends BasicGame implements Renderable {
 	private Offset activeOffset;
 	private Circle renderableCircle;
 	private Char character;
+
+	private Line line;
 	
 	public SlickTestGame(String title) {
 		super(title);
@@ -50,6 +53,9 @@ public class SlickTestGame extends BasicGame implements Renderable {
 		if (renderableCircle != null) {
 			renderableCircle.render(g);
 		}
+		if (line != null) {
+			line.render(g);
+		}
 		
 		render(g);
 	}
@@ -70,6 +76,9 @@ public class SlickTestGame extends BasicGame implements Renderable {
 				renderables.add(character);
 			}
 			character.setPath(character.getPosition().toOffset().pathTo(activeOffset));
+		}
+		if (character != null && activeOffset != null) {
+			line = new Line(character.getPosition().toOffset(), activeOffset);
 		}
 		
 		for (Updatable updatable : updatables) {

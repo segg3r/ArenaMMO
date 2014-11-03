@@ -168,5 +168,5 @@ public class Offset implements Renderable {
 		g.fillRect((int) point.x, (int) point.y, arena.getCellSize(),
 				arena.getCellSize());
 	}
-
+	
 }
