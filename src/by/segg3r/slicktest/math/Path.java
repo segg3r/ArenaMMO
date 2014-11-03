@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.newdawn.slick.Graphics;
 
-import by.segg3r.slicktest.logic.Arena;
 import by.segg3r.slicktest.logic.Renderable;
 
 public class Path implements Renderable {
@@ -30,14 +29,13 @@ public class Path implements Renderable {
 
 	@Override
 	public void render(Graphics g) {
-		Arena arena = Arena.get();
 		for (int i = 0; i < getSize() - 1; i++) {
 			Offset o1 = getOffset(i);
 			Offset o2 = getOffset(i + 1);
-			Point p1 = arena.getArenaHalfPointByOffset(o1);
-			Point p2 = arena.getArenaHalfPointByOffset(o2);
-			g.drawLine((float) p1.getX(), (float) p1.getY(),
-					(float) p2.getX(), (float) p2.getY());
+			Point p1 = o1.toHalfPoint();
+			Point p2 = o2.toHalfPoint();
+			g.drawLine((float) p1.x, (float) p1.y,
+					(float) p2.x, (float) p2.y);
 		}
 	}
 

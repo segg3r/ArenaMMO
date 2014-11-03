@@ -11,7 +11,7 @@ public abstract class ArenaObject extends Entity {
 	}
 	
 	public ArenaObject(Offset offset) {
-		super(Arena.get().getArenaHalfPointByOffset(offset));
+		super(offset.toHalfPoint());
 		this.offset = offset;
 	}
 

@@ -1,46 +1,22 @@
 package by.segg3r.slicktest.logic.storage;
 
+import by.segg3r.slicktest.math.Point;
+
 public class AnimationDescriptor {
 
 	private String fileName;
 	private int columns;
 	private int rows;
-	private int offsetX;
-	private int offsetY;
-	private double imageSpeed = 1;
-
-	public double getImageSpeed() {
-		return imageSpeed;
-	}
-
-	public void setImageSpeed(double imageSpeed) {
-		this.imageSpeed = imageSpeed;
-	}
-
-	public int getOffsetX() {
-		return offsetX;
-	}
-
-	public void setOffsetX(int offsetX) {
-		this.offsetX = offsetX;
-	}
-
-	public int getOffsetY() {
-		return offsetY;
-	}
-
-	public void setOffsetY(int offsetY) {
-		this.offsetY = offsetY;
-	}
+	private Point offset;
+	private int imageSpeed = 1;
 
 	public AnimationDescriptor(String fileName, int columns, int rows,
-			int offsetX, int offsetY, double imageSpeed) {
+			Point offset, int imageSpeed) {
 		super();
 		this.fileName = fileName;
 		this.columns = columns;
 		this.rows = rows;
-		this.offsetX = offsetX;
-		this.offsetY = offsetY;
+		this.offset = offset;
 		this.imageSpeed = imageSpeed;
 	}
 
@@ -66,6 +42,22 @@ public class AnimationDescriptor {
 
 	public void setRows(int rows) {
 		this.rows = rows;
+	}
+
+	public int getImageSpeed() {
+		return imageSpeed;
+	}
+
+	public void setImageSpeed(int imageSpeed) {
+		this.imageSpeed = imageSpeed;
+	}
+
+	public Point getOffset() {
+		return offset;
+	}
+
+	public void setOffset(Point offset) {
+		this.offset = offset;
 	}
 
 }
