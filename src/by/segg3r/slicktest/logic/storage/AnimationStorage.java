@@ -35,20 +35,32 @@ public class AnimationStorage {
 		}
 	}
 
-	public List<AnimationDescriptor> getAnimationDescriptors() {
-		// вернуть список описаний анимаций из файла в папке, путь к которой
-		// указан в path
+	private void createAnimation(String animationName, int columns, int rows)
+			throws SlickException {
+		String fullFileName = path + animationName + ".png";
+
+		Image image = new Image(fullFileName);
+		int columnWidth = image.getWidth() / columns;
+		int rowHeight = image.getHeight() / rows;
+		SpriteSheet spriteSheet = new SpriteSheet(image, columnWidth, rowHeight);
+		Animation animation = new Animation(spriteSheet, 250);
+
+		animations.put(animationName, animation);
+	}
+
+	private List<AnimationDescriptor> getAnimationDescriptors() {
+		List<AnimationDescriptor> result = new ArrayList<AnimationDescriptor>();
+
 		try {
-			File file = new File(path + "\\animationDescriptor.txt");
+			File file = new File(path + "/animationDescriptor.txt");
 			BufferedReader br = new BufferedReader(new InputStreamReader(
 					new FileInputStream(file)));
 
-			List<AnimationDescriptor> result = new ArrayList<AnimationDescriptor>();
 			String line;
 			while ((line = br.readLine()) != null) {
 				String[] parametres;
 				parametres = line.split(";");
-				if (parametres[0].equals("*") != true) {
+				if (!parametres[0].equals("*")) {
 					result.add(new AnimationDescriptor(parametres[0], Integer
 							.parseInt(parametres[1]), Integer
 							.parseInt(parametres[2]), Integer
@@ -60,12 +72,11 @@ public class AnimationStorage {
 					File[] files = dir.listFiles();
 					for (File f : files) {
 						if (f.getPath().matches(
-								this.path.replaceAll("\\\\", "\\\\\\\\")
+								path.replaceAll("\\\\", "\\\\\\\\")
 										+ "\\\\.+\\.png")) {
-							StringBuilder sb = new StringBuilder(f.getName());
-							sb.delete(f.getName().length() - 4, f.getName()
-									.length());
-							result.add(new AnimationDescriptor(sb.toString(),
+							String fileName = f.getName().substring(0,
+									f.getName().length() - 4);
+							result.add(new AnimationDescriptor(fileName,
 									Integer.parseInt(parametres[1]), Integer
 											.parseInt(parametres[2]), Integer
 											.parseInt(parametres[3]), Integer
@@ -82,19 +93,6 @@ public class AnimationStorage {
 		} catch (Exception e) {
 			return new ArrayList<AnimationDescriptor>();
 		}
-	}
-
-	private void createAnimation(String animationName, int columns, int rows)
-			throws SlickException {
-		String fullFileName = path + animationName + ".png";
-
-		Image image = new Image(fullFileName);
-		int columnWidth = image.getWidth() / columns;
-		int rowHeight = image.getHeight() / rows;
-		SpriteSheet spriteSheet = new SpriteSheet(image, columnWidth, rowHeight);
-		Animation animation = new Animation(spriteSheet, 250);
-
-		animations.put(animationName, animation);
 	}
 
 }
