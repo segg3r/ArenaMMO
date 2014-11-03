@@ -24,7 +24,8 @@ public class Line implements Renderable {
 		Arena arena = Arena.get();
 		for (Offset offset : getOffsets()) {
 			Point point = offset.toPoint();
-			g.fillRect((float) point.x, (float) point.y, arena.getCellSize(), arena.getCellSize());
+			g.fillRect((float) point.x, (float) point.y, arena.getCellSize(),
+					arena.getCellSize());
 		}
 	}
 
@@ -35,12 +36,16 @@ public class Line implements Renderable {
 		Point fromPoint = from.toHalfPoint();
 		Point toPoint = to.toHalfPoint();
 
-		for (int i = 0; i <= distance; i++) {
-			Point offsetPoint = new Point(fromPoint.x
-					+ (double) (toPoint.x - fromPoint.x) / distance * i,
-					fromPoint.y + (double) (toPoint.y - fromPoint.y) / distance
-							* i);
-			result.add(offsetPoint.toOffset());
+		if (distance == 0) {
+			result.add(from);
+		} else {
+			for (int i = 0; i <= distance; i++) {
+				Point offsetPoint = new Point(fromPoint.x
+						+ (double) (toPoint.x - fromPoint.x) / distance * i,
+						fromPoint.y + (double) (toPoint.y - fromPoint.y)
+								/ distance * i);
+				result.add(offsetPoint.toOffset());
+			}
 		}
 
 		return result;
