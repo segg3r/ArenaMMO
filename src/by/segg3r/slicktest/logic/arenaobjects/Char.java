@@ -4,6 +4,7 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 
 import by.segg3r.slicktest.logic.ArenaObject;
+import by.segg3r.slicktest.logic.actions.PathAction;
 import by.segg3r.slicktest.math.Offset;
 import by.segg3r.slicktest.math.Path;
 import by.segg3r.slicktest.math.Point;
@@ -13,7 +14,8 @@ public class Char extends ArenaObject {
 	private Path path;
 	private int currentPathOffsetIndex;
 	private Point destination;
-	
+	private PathAction pathAction;
+
 	public Char(Offset offset, Animation animation) {
 		super(offset);
 		this.setAnimation(animation);
@@ -24,20 +26,19 @@ public class Char extends ArenaObject {
 	public void render(Graphics g) {
 		double direction = getDirection();
 		SideDirection sideDirection = SideDirection.fromDirection(direction);
-		
-		if (getSpeed() == 0 || getAnimation().getFrame() > sideDirection.getMaxImage() || getAnimation().getFrame() < sideDirection.getMinImage()) {
+
+		if (getSpeed() == 0
+				|| getAnimation().getFrame() > sideDirection.getMaxImage()
+				|| getAnimation().getFrame() < sideDirection.getMinImage()) {
 			getAnimation().setCurrentFrame(sideDirection.getMinImage());
 		}
-		
+
 		super.render(g);
-		
-		if (path != null) {
-			path.render(g);
-		}
+
 		g.drawString(String.valueOf(getDirection()), 5, 55);
 		g.drawString(SideDirection.fromDirection(0).toString(), 5, 75);
 	}
-	
+
 	@Override
 	public void update(double delta) {
 		super.update(delta);
@@ -49,7 +50,7 @@ public class Char extends ArenaObject {
 		} else {
 			destination = getPosition();
 		}
-		
+
 		if (!getPosition().equals(destination)) {
 			if (getPosition().distanceTo(destination) > getSpeed() / 1000.) {
 				setDirection(getPosition().directionTo(destination));
@@ -59,9 +60,10 @@ public class Char extends ArenaObject {
 				if (path != null && currentPathOffsetIndex >= path.getSize()) {
 					currentPathOffsetIndex = 0;
 					path = null;
+					pathAction.finish();
 					setSpeed(0);
 				}
-				
+
 				setPosition(destination);
 			}
 		}
@@ -75,7 +77,9 @@ public class Char extends ArenaObject {
 		this.path = path;
 		this.currentPathOffsetIndex = 0;
 	}
-	
-	
+
+	public void setPathAction(PathAction pathAction) {
+		this.pathAction = pathAction;
+	}
 
 }

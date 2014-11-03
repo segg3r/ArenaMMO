@@ -12,9 +12,10 @@ import org.newdawn.slick.SlickException;
 import by.segg3r.slicktest.logic.Arena;
 import by.segg3r.slicktest.logic.Renderable;
 import by.segg3r.slicktest.logic.Updatable;
+import by.segg3r.slicktest.logic.actions.ActionQueue;
+import by.segg3r.slicktest.logic.actions.PathAction;
 import by.segg3r.slicktest.logic.arenaobjects.Char;
 import by.segg3r.slicktest.logic.storage.AnimationStorage;
-import by.segg3r.slicktest.math.Circle;
 import by.segg3r.slicktest.math.Line;
 import by.segg3r.slicktest.math.Offset;
 import by.segg3r.slicktest.math.Point;
@@ -23,10 +24,10 @@ public class SlickTestGame extends BasicGame implements Renderable {
 
 	private AnimationStorage charactersAnimationStorage = new AnimationStorage("res/img/characters/");
 	
+	private ActionQueue actionQueue;
 	private List<Renderable> renderables;
 	private List<Updatable> updatables;
 	private Offset activeOffset;
-	private Circle renderableCircle;
 	private Char character;
 
 	private Line line;
@@ -50,9 +51,6 @@ public class SlickTestGame extends BasicGame implements Renderable {
 		if (activeOffset != null) {
 			activeOffset.render(g);
 		}
-		if (renderableCircle != null) {
-			renderableCircle.render(g);
-		}
 		if (line != null) {
 			line.render(g);
 		}
@@ -72,13 +70,16 @@ public class SlickTestGame extends BasicGame implements Renderable {
 		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON) && activeOffset != null) {			
 			if (character == null) {
 				character = new Char(activeOffset, charactersAnimationStorage.getAnimation("001-Fighter01"));
+				actionQueue = new ActionQueue(activeOffset);
 				updatables.add(character);
 				renderables.add(character);
+				renderables.add(actionQueue);
+			} else {
+				actionQueue.addAction(new PathAction(actionQueue, character, activeOffset));
 			}
-			character.setPath(character.getPosition().toOffset().pathTo(activeOffset));
 		}
 		if (character != null && activeOffset != null) {
-			line = new Line(character.getPosition().toOffset(), activeOffset);
+			line = new Line(actionQueue.getLastOffset(), activeOffset);
 		}
 		
 		for (Updatable updatable : updatables) {
