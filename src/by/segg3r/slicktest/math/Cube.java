@@ -2,9 +2,9 @@ package by.segg3r.slicktest.math;
 
 public class Cube {
 
-	private int x;
-	private int y;
-	private int z;
+	public int x;
+	public int y;
+	public int z;
 
 	public Cube(int x, int y, int z) {
 		super();
@@ -15,30 +15,6 @@ public class Cube {
 
 	public Offset toOffset() {
 		return new Offset(x + (z + (z & 1)) / 2, z);
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
-
-	public int getZ() {
-		return z;
-	}
-
-	public void setZ(int z) {
-		this.z = z;
 	}
 
 	@Override

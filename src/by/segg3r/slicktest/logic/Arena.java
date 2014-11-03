@@ -33,7 +33,7 @@ public class Arena extends Entity {
 			for (int j = 0; j < width; j++) {
 				Point point = new Offset(j, i).toPoint();
 
-				g.drawRect((int) point.getX(), (int) point.getY(), cellSize,
+				g.drawRect((int) point.x, (int) point.y, cellSize,
 						cellSize);
 			}
 		}

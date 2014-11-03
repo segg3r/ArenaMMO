@@ -16,8 +16,8 @@ import by.segg3r.slicktest.math.paths.OffsetSequenceItem;
 
 public class Offset implements Renderable {
 
-	private int left;
-	private int top;
+	public int left;
+	public int top;
 
 	public Offset(int left, int top) {
 		super();
@@ -29,9 +29,9 @@ public class Offset implements Renderable {
 		Cube c1 = toCube();
 		Cube c2 = o2.toCube();
 		return Math.max(
-				Math.max(Math.abs(c1.getX() - c2.getX()),
-						Math.abs(c1.getY() - c2.getY())),
-				Math.abs(c1.getZ() - c2.getZ()));
+				Math.max(Math.abs(c1.x - c2.x),
+						Math.abs(c1.y - c2.y)),
+				Math.abs(c1.z - c2.z));
 	}
 
 	public Cube toCube() {
@@ -44,9 +44,9 @@ public class Offset implements Renderable {
 	public Point toPoint() {
 		Arena arena = Arena.get();
 		boolean isOdd = top % 2 == 0;
-		int pointX = (int) (arena.getPosition().getX() + left
+		int pointX = (int) (arena.getPosition().x + left
 				* arena.getCellSize() + (isOdd ? arena.getCellSize() / 2 : 0));
-		int pointY = (int) (arena.getPosition().getY() + top
+		int pointY = (int) (arena.getPosition().y + top
 				* arena.getCellSize());
 
 		return new Point(pointX, pointY);
@@ -55,7 +55,7 @@ public class Offset implements Renderable {
 	public Point toHalfPoint() {
 		Arena arena = Arena.get();
 		Point point = toPoint();
-		return new Point(point.getX() + arena.getCellSize() / 2, point.getY()
+		return new Point(point.x + arena.getCellSize() / 2, point.y
 				+ arena.getCellSize() / 2);
 	}
 
@@ -107,17 +107,17 @@ public class Offset implements Renderable {
 	private static List<Offset> getNeighbors(Offset offset) {
 		Cube cube = offset.toCube();
 		return Arrays.asList(new Offset[] {
-				new Cube(cube.getX(), cube.getY() + 1, cube.getZ() - 1)
+				new Cube(cube.x, cube.y + 1, cube.z - 1)
 						.toOffset(),
-				new Cube(cube.getX() + 1, cube.getY(), cube.getZ() - 1)
+				new Cube(cube.x + 1, cube.y, cube.z - 1)
 						.toOffset(),
-				new Cube(cube.getX() + 1, cube.getY() - 1, cube.getZ())
+				new Cube(cube.x + 1, cube.y - 1, cube.z)
 						.toOffset(),
-				new Cube(cube.getX(), cube.getY() - 1, cube.getZ() + 1)
+				new Cube(cube.x, cube.y - 1, cube.z + 1)
 						.toOffset(),
-				new Cube(cube.getX() - 1, cube.getY(), cube.getZ() + 1)
+				new Cube(cube.x - 1, cube.y, cube.z + 1)
 						.toOffset(),
-				new Cube(cube.getX() - 1, cube.getY() + 1, cube.getZ())
+				new Cube(cube.x - 1, cube.y + 1, cube.z)
 						.toOffset() });
 	}
 
@@ -129,22 +129,6 @@ public class Offset implements Renderable {
 			}
 		}
 		return result;
-	}
-
-	public int getLeft() {
-		return left;
-	}
-
-	public void setLeft(int left) {
-		this.left = left;
-	}
-
-	public int getTop() {
-		return top;
-	}
-
-	public void setTop(int top) {
-		this.top = top;
 	}
 
 	@Override
@@ -181,7 +165,7 @@ public class Offset implements Renderable {
 	public void render(Graphics g) {
 		Arena arena = Arena.get();
 		Point point = toPoint();
-		g.fillRect((int) point.getX(), (int) point.getY(), arena.getCellSize(),
+		g.fillRect((int) point.x, (int) point.y, arena.getCellSize(),
 				arena.getCellSize());
 	}
 

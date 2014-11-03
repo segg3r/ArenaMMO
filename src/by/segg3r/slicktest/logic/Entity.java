@@ -24,13 +24,13 @@ public abstract class Entity implements Renderable, Updatable {
 	
 	@Override
 	public void update(double delta) {
-		position.setX(position.getX() + Math.cos(direction) * delta * speed);
-		position.setY(position.getY() + Math.sin(direction) * delta * speed);
+		position.x += Math.cos(direction) * delta * speed;
+		position.y += Math.sin(direction) * delta * speed;
 	}
 	
 	@Override
 	public void render(Graphics g) {
-		animation.draw((int) position.getX(), (int) position.getY());
+		animation.draw((int) position.x, (int) position.y);
 	}
 
 	public double getDirection() {

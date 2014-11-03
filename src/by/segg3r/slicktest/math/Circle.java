@@ -57,7 +57,7 @@ public class Circle implements Renderable {
 		List<Offset> offsets = getOffsets();
 		for (Offset offset : offsets) {
 			Point point = offset.toPoint();
-			g.fillRect((int) point.getX(), (int) point.getY(), arena.getCellSize(), arena.getCellSize());
+			g.fillRect((int) point.x, (int) point.y, arena.getCellSize(), arena.getCellSize());
 		}
 	}
 

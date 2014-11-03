@@ -34,8 +34,8 @@ public class Path implements Renderable {
 			Offset o2 = getOffset(i + 1);
 			Point p1 = o1.toHalfPoint();
 			Point p2 = o2.toHalfPoint();
-			g.drawLine((float) p1.getX(), (float) p1.getY(),
-					(float) p2.getX(), (float) p2.getY());
+			g.drawLine((float) p1.x, (float) p1.y,
+					(float) p2.x, (float) p2.y);
 		}
 	}
 
