@@ -37,11 +37,6 @@ public class AnimationStorage {
 		}
 	}
 
-<<<<<<< HEAD
-	private List<AnimationDescriptor> getAnimationDescriptors() {
-		// вернуть список описаний анимаций из файла в папке, путь к которой
-		// указан в path
-=======
 	private void createAnimation(AnimationDescriptor descriptor)
 			throws SlickException {
 		String fullFileName = path + descriptor.getFileName() + ".png";
@@ -59,7 +54,6 @@ public class AnimationStorage {
 	private List<AnimationDescriptor> getAnimationDescriptors() {
 		List<AnimationDescriptor> result = new ArrayList<AnimationDescriptor>();
 
->>>>>>> origin/master
 		try {
 			File file = new File(path + "/animationDescriptor.txt");
 			BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -95,6 +89,7 @@ public class AnimationStorage {
 					}
 				}
 			}
+
 			br.close();
 
 			return result;
