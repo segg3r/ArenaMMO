@@ -35,7 +35,7 @@ public class AnimationStorage {
 		}
 	}
 
-	public List<AnimationDescriptor> getAnimationDescriptors() {
+	private List<AnimationDescriptor> getAnimationDescriptors() {
 		// вернуть список описаний анимаций из файла в папке, путь к которой
 		// указан в path
 		try {
@@ -75,7 +75,6 @@ public class AnimationStorage {
 					}
 				}
 			}
-
 			br.close();
 
 			return result;
