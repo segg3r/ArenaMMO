@@ -14,6 +14,9 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
+import by.segg3r.slicktest.logic.OffsettedAnimation;
+import by.segg3r.slicktest.math.Point;
+
 public class AnimationStorage {
 
 	private String path;
@@ -30,22 +33,22 @@ public class AnimationStorage {
 
 	public void loadAnimations() throws SlickException {
 		for (AnimationDescriptor descriptor : getAnimationDescriptors()) {
-			createAnimation(descriptor.getFileName(), descriptor.getColumns(),
-					descriptor.getRows());
+			createAnimation(descriptor);
 		}
 	}
 
-	private void createAnimation(String animationName, int columns, int rows)
+	private void createAnimation(AnimationDescriptor descriptor)
 			throws SlickException {
-		String fullFileName = path + animationName + ".png";
+		String fullFileName = path + descriptor.getFileName() + ".png";
 
 		Image image = new Image(fullFileName);
-		int columnWidth = image.getWidth() / columns;
-		int rowHeight = image.getHeight() / rows;
+		int columnWidth = image.getWidth() / descriptor.getColumns();
+		int rowHeight = image.getHeight() / descriptor.getRows();
 		SpriteSheet spriteSheet = new SpriteSheet(image, columnWidth, rowHeight);
-		Animation animation = new Animation(spriteSheet, 250);
+		Animation animation = new OffsettedAnimation(spriteSheet,
+				descriptor.getImageSpeed(), descriptor.getOffset());
 
-		animations.put(animationName, animation);
+		animations.put(descriptor.getFileName(), animation);
 	}
 
 	private List<AnimationDescriptor> getAnimationDescriptors() {
@@ -63,10 +66,10 @@ public class AnimationStorage {
 				if (!parametres[0].equals("*")) {
 					result.add(new AnimationDescriptor(parametres[0], Integer
 							.parseInt(parametres[1]), Integer
-							.parseInt(parametres[2]), Integer
+							.parseInt(parametres[2]), new Point(Integer
 							.parseInt(parametres[3]), Integer
-							.parseInt(parametres[4]), Double
-							.parseDouble(parametres[5])));
+							.parseInt(parametres[4])), Integer
+							.parseInt(parametres[5])));
 				} else {
 					File dir = new File(path);
 					File[] files = dir.listFiles();
@@ -78,10 +81,10 @@ public class AnimationStorage {
 									f.getName().length() - 4);
 							result.add(new AnimationDescriptor(fileName,
 									Integer.parseInt(parametres[1]), Integer
-											.parseInt(parametres[2]), Integer
-											.parseInt(parametres[3]), Integer
-											.parseInt(parametres[4]), Double
-											.parseDouble(parametres[5])));
+											.parseInt(parametres[2]),
+									new Point(Integer.parseInt(parametres[3]),
+											Integer.parseInt(parametres[4])),
+									Integer.parseInt(parametres[5])));
 						}
 					}
 				}

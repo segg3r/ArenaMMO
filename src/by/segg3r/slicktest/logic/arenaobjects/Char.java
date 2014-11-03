@@ -44,7 +44,7 @@ public class Char extends ArenaObject {
 
 		if (path != null) {
 			Offset currentPathOffset = path.getOffset(currentPathOffsetIndex);
-			Point currentPathPoint = currentPathOffset.toPoint();
+			Point currentPathPoint = currentPathOffset.toHalfPoint();
 			destination = currentPathPoint;
 		} else {
 			destination = getPosition();

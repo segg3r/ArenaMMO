@@ -30,7 +30,7 @@ public abstract class Entity implements Renderable, Updatable {
 	
 	@Override
 	public void render(Graphics g) {
-		animation.draw((int) position.x, (int) position.y);
+		animation.draw((float) position.x, (float) position.y);
 	}
 
 	public double getDirection() {
