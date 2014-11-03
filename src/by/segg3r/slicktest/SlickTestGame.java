@@ -15,7 +15,6 @@ import by.segg3r.slicktest.logic.Updatable;
 import by.segg3r.slicktest.logic.arenaobjects.Char;
 import by.segg3r.slicktest.logic.storage.AnimationStorage;
 import by.segg3r.slicktest.math.Circle;
-import by.segg3r.slicktest.math.GameMath;
 import by.segg3r.slicktest.math.Offset;
 import by.segg3r.slicktest.math.Point;
 
@@ -62,7 +61,7 @@ public class SlickTestGame extends BasicGame implements Renderable {
 		int mouseX = input.getMouseX();
 		int mouseY = input.getMouseY();
 		Point mousePoint = new Point(mouseX, mouseY);
-		activeOffset = Arena.get().isPointInArena(mousePoint) ? Arena.get().getOffsetByPoint(mousePoint) : null;
+		activeOffset = mousePoint.isInArena() ? mousePoint.toOffset() : null;
 		
 		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON) && activeOffset != null) {			
 			if (character == null) {
@@ -70,7 +69,7 @@ public class SlickTestGame extends BasicGame implements Renderable {
 				updatables.add(character);
 				renderables.add(character);
 			}
-			character.setPath(GameMath.getPath(Arena.get().getOffsetByPoint(character.getPosition()), activeOffset));
+			character.setPath(character.getPosition().toOffset().pathTo(activeOffset));
 		}
 		
 		for (Updatable updatable : updatables) {

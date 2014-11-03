@@ -13,6 +13,10 @@ public class Cube {
 		this.z = z;
 	}
 
+	public Offset toOffset() {
+		return new Offset(x + (z + (z & 1)) / 2, z);
+	}
+
 	public int getX() {
 		return x;
 	}
