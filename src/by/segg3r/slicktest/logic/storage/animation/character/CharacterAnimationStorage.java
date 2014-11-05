@@ -1,6 +1,9 @@
-package by.segg3r.slicktest.logic.storage;
+package by.segg3r.slicktest.logic.storage.animation.character;
 
 import org.newdawn.slick.SlickException;
+
+import by.segg3r.slicktest.logic.storage.animation.AnimationStorage;
+
 
 public class CharacterAnimationStorage extends
 		AnimationStorage<RootCharacterAnimationDescriptor> {

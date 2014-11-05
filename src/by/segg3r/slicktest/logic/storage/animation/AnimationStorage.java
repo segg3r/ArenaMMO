@@ -1,7 +1,11 @@
-package by.segg3r.slicktest.logic.storage;
+package by.segg3r.slicktest.logic.storage.animation;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
+
+import by.segg3r.slicktest.logic.storage.Descriptor;
+import by.segg3r.slicktest.logic.storage.RootDescriptor;
+import by.segg3r.slicktest.logic.storage.Storage;
 
 public abstract class AnimationStorage<T extends RootDescriptor<String, Animation>> extends Storage<String, Animation> {
 

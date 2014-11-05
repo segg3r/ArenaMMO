@@ -15,7 +15,7 @@ import by.segg3r.slicktest.logic.Updatable;
 import by.segg3r.slicktest.logic.actions.ActionQueue;
 import by.segg3r.slicktest.logic.actions.PathAction;
 import by.segg3r.slicktest.logic.arenaobjects.Char;
-import by.segg3r.slicktest.logic.storage.CharacterAnimationStorage;
+import by.segg3r.slicktest.logic.storage.animation.character.CharacterAnimationStorage;
 import by.segg3r.slicktest.math.Line;
 import by.segg3r.slicktest.math.Offset;
 import by.segg3r.slicktest.math.Point;

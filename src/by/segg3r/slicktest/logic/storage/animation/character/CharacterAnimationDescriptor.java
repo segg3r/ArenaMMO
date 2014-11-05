@@ -1,4 +1,4 @@
-package by.segg3r.slicktest.logic.storage;
+package by.segg3r.slicktest.logic.storage.animation.character;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
@@ -6,6 +6,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 import by.segg3r.slicktest.logic.OffsettedAnimation;
+import by.segg3r.slicktest.logic.storage.Descriptor;
 import by.segg3r.slicktest.math.Point;
 
 public class CharacterAnimationDescriptor extends Descriptor<String, Animation> {

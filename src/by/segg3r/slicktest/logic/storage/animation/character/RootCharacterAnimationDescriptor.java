@@ -1,4 +1,4 @@
-package by.segg3r.slicktest.logic.storage;
+package by.segg3r.slicktest.logic.storage.animation.character;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -10,6 +10,8 @@ import java.util.List;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
 
+import by.segg3r.slicktest.logic.storage.Descriptor;
+import by.segg3r.slicktest.logic.storage.RootDescriptor;
 import by.segg3r.slicktest.math.Point;
 
 public class RootCharacterAnimationDescriptor extends RootDescriptor<String, Animation> {
