@@ -1,15 +1,14 @@
 package by.segg3r.slicktest.logic.storage.animation.tileset;
 
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
 
-import by.segg3r.slicktest.logic.OffsettedAnimation;
+import by.segg3r.slicktest.logic.Sprite;
 import by.segg3r.slicktest.logic.storage.Descriptor;
 import by.segg3r.slicktest.math.Point;
+import by.segg3r.slicktest.math.Rectangle;
 
-public class TileDescriptor extends Descriptor<String, Animation> {
+public class TileDescriptor extends Descriptor<String, Sprite> {
 
 	private int startColumns;
 	private int startRows;
@@ -19,10 +18,12 @@ public class TileDescriptor extends Descriptor<String, Animation> {
 	private Image image;
 	private int columnsNumber;
 	private int rowsNumber;
+	private Rectangle mask;
 
 	public TileDescriptor(String key, Image image, int columnsNumber,
 			int rowsNumber, int startColumns, int startRows,
-			int imageColumnsNumber, int imageRowsNumber, Point offset) {
+			int imageColumnsNumber, int imageRowsNumber, Point offset,
+			Rectangle mask) {
 		super(key);
 		this.columnsNumber = columnsNumber;
 		this.rowsNumber = rowsNumber;
@@ -32,19 +33,18 @@ public class TileDescriptor extends Descriptor<String, Animation> {
 		this.imageColumnsNumber = imageColumnsNumber;
 		this.imageRowsNumber = imageRowsNumber;
 		this.offset = offset;
+		this.mask = mask;
 	}
 
 	@Override
-	public Animation create() throws SlickException {
+	public Sprite create() throws SlickException {
 		int columnWidth = image.getWidth() / columnsNumber;
 		int rowHeight = image.getHeight() / rowsNumber;
 
 		Image tileImage = image.getSubImage(columnWidth * startColumns,
-				rowHeight * startRows, columnWidth * imageColumnsNumber, rowHeight
-						* imageRowsNumber);
-		OffsettedAnimation result = new OffsettedAnimation(new SpriteSheet(tileImage, 1, 1), 1, offset);
-
-		return result;
+				rowHeight * startRows, columnWidth * imageColumnsNumber,
+				rowHeight * imageRowsNumber);
+		return new Sprite(tileImage, offset, mask);
 	}
 
 	public int getStartColumns() {
@@ -109,6 +109,14 @@ public class TileDescriptor extends Descriptor<String, Animation> {
 
 	public void setRowsNumber(int rowsNumber) {
 		this.rowsNumber = rowsNumber;
+	}
+
+	public Rectangle getMask() {
+		return mask;
+	}
+
+	public void setMask(Rectangle mask) {
+		this.mask = mask;
 	}
 
 }

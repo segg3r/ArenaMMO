@@ -7,15 +7,16 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import by.segg3r.slicktest.logic.Sprite;
 import by.segg3r.slicktest.logic.storage.Descriptor;
 import by.segg3r.slicktest.logic.storage.RootDescriptor;
 import by.segg3r.slicktest.math.Point;
+import by.segg3r.slicktest.math.Rectangle;
 
-public class TilesetDescriptor extends RootDescriptor<String, Animation> {
+public class TilesetDescriptor extends RootDescriptor<String, Sprite> {
 
 	private String path;
 	private int columnsNumber;
@@ -30,9 +31,9 @@ public class TilesetDescriptor extends RootDescriptor<String, Animation> {
 	}
 
 	@Override
-	public List<Descriptor<String, Animation>> create() throws SlickException {
+	public List<Descriptor<String, Sprite>> create() throws SlickException {
 		try {
-			List<Descriptor<String, Animation>> result = new ArrayList<Descriptor<String, Animation>>();
+			List<Descriptor<String, Sprite>> result = new ArrayList<Descriptor<String, Sprite>>();
 			File file = new File(path);
 			BufferedReader br = new BufferedReader(new InputStreamReader(
 					new FileInputStream(file)));
@@ -50,7 +51,11 @@ public class TilesetDescriptor extends RootDescriptor<String, Animation> {
 								.parseInt(parameters[3]), Integer
 								.parseInt(parameters[4]), new Point(Integer
 								.parseInt(parameters[5]), Integer
-								.parseInt(parameters[6]))));
+								.parseInt(parameters[6])), new Rectangle(
+								Integer.valueOf(parameters[7]), Integer
+										.valueOf(parameters[8]), Integer
+										.valueOf(parameters[9]), Integer
+										.valueOf(parameters[10]))));
 			}
 			br.close();
 			return result;

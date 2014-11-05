@@ -7,22 +7,23 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
 
+import by.segg3r.slicktest.logic.Sprite;
 import by.segg3r.slicktest.logic.storage.Descriptor;
 import by.segg3r.slicktest.logic.storage.RootDescriptor;
 import by.segg3r.slicktest.math.Point;
 
-public class RootCharacterAnimationDescriptor extends RootDescriptor<String, Animation> {
+public class RootCharacterAnimationDescriptor extends
+		RootDescriptor<String, Sprite> {
 
 	public RootCharacterAnimationDescriptor(String key) {
 		super(key);
 	}
 
 	@Override
-	public List<Descriptor<String, Animation>> create() throws SlickException {
-		List<Descriptor<String, Animation>> result = new ArrayList<Descriptor<String, Animation>>();
+	public List<Descriptor<String, Sprite>> create() throws SlickException {
+		List<Descriptor<String, Sprite>> result = new ArrayList<Descriptor<String, Sprite>>();
 
 		try {
 			File file = new File(getKey() + "/animationDescriptor.txt");
@@ -34,12 +35,12 @@ public class RootCharacterAnimationDescriptor extends RootDescriptor<String, Ani
 				String[] parametres;
 				parametres = line.split(";");
 				if (!parametres[0].equals("*")) {
-					result.add(new CharacterAnimationDescriptor(getKey(), parametres[0], Integer
-							.parseInt(parametres[1]), Integer
-							.parseInt(parametres[2]), new Point(Integer
-							.parseInt(parametres[3]), Integer
-							.parseInt(parametres[4])), Integer
-							.parseInt(parametres[5])));
+					result.add(new CharacterAnimationDescriptor(getKey(),
+							parametres[0], Integer.parseInt(parametres[1]),
+							Integer.parseInt(parametres[2]), new Point(Integer
+									.parseInt(parametres[3]), Integer
+									.parseInt(parametres[4])), Integer
+									.parseInt(parametres[5])));
 				} else {
 					File dir = new File(getKey());
 					File[] files = dir.listFiles();
@@ -49,8 +50,9 @@ public class RootCharacterAnimationDescriptor extends RootDescriptor<String, Ani
 										+ ".+\\.png")) {
 							String fileName = f.getName().substring(0,
 									f.getName().length() - 4);
-							result.add(new CharacterAnimationDescriptor(getKey(), fileName,
-									Integer.parseInt(parametres[1]), Integer
+							result.add(new CharacterAnimationDescriptor(
+									getKey(), fileName, Integer
+											.parseInt(parametres[1]), Integer
 											.parseInt(parametres[2]),
 									new Point(Integer.parseInt(parametres[3]),
 											Integer.parseInt(parametres[4])),
