@@ -15,15 +15,16 @@ import by.segg3r.slicktest.logic.Updatable;
 import by.segg3r.slicktest.logic.actions.ActionQueue;
 import by.segg3r.slicktest.logic.actions.PathAction;
 import by.segg3r.slicktest.logic.arenaobjects.Char;
-import by.segg3r.slicktest.logic.storage.AnimationStorage;
+import by.segg3r.slicktest.logic.storage.CharacterAnimationStorage;
 import by.segg3r.slicktest.math.Line;
 import by.segg3r.slicktest.math.Offset;
 import by.segg3r.slicktest.math.Point;
 
 public class SlickTestGame extends BasicGame implements Renderable {
 
-	private AnimationStorage charactersAnimationStorage = new AnimationStorage("res/img/characters/");
-	
+	private CharacterAnimationStorage charactersAnimationStorage = new CharacterAnimationStorage(
+			"res\\img\\characters\\");
+
 	private ActionQueue actionQueue;
 	private List<Renderable> renderables;
 	private List<Updatable> updatables;
@@ -31,7 +32,7 @@ public class SlickTestGame extends BasicGame implements Renderable {
 	private Char character;
 
 	private Line line;
-	
+
 	public SlickTestGame(String title) {
 		super(title);
 		this.renderables = new ArrayList<Renderable>();
@@ -40,8 +41,8 @@ public class SlickTestGame extends BasicGame implements Renderable {
 
 	@Override
 	public void init(GameContainer gameContainer) throws SlickException {
-		charactersAnimationStorage.loadAnimations();
-		
+		charactersAnimationStorage.load();
+
 		addRenderable(Arena.get());
 	}
 
@@ -54,7 +55,7 @@ public class SlickTestGame extends BasicGame implements Renderable {
 		if (line != null) {
 			line.render(g);
 		}
-		
+
 		render(g);
 	}
 
@@ -66,22 +67,25 @@ public class SlickTestGame extends BasicGame implements Renderable {
 		int mouseY = input.getMouseY();
 		Point mousePoint = new Point(mouseX, mouseY);
 		activeOffset = mousePoint.isInArena() ? mousePoint.toOffset() : null;
-		
-		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON) && activeOffset != null) {			
+
+		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)
+				&& activeOffset != null) {
 			if (character == null) {
-				character = new Char(activeOffset, charactersAnimationStorage.getAnimation("001-Fighter01"));
+				character = new Char(activeOffset,
+						charactersAnimationStorage.get("001-Fighter01"));
 				actionQueue = new ActionQueue(activeOffset);
 				updatables.add(character);
 				renderables.add(character);
 				renderables.add(actionQueue);
 			} else {
-				actionQueue.addAction(new PathAction(actionQueue, character, activeOffset));
+				actionQueue.addAction(new PathAction(actionQueue, character,
+						activeOffset));
 			}
 		}
 		if (character != null && activeOffset != null) {
 			line = new Line(actionQueue.getLastOffset(), activeOffset);
 		}
-		
+
 		for (Updatable updatable : updatables) {
 			updatable.update(delta / 1000.);
 		}
