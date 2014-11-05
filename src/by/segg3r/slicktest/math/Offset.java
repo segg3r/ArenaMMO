@@ -1,11 +1,11 @@
 package by.segg3r.slicktest.math;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.newdawn.slick.Graphics;
 
@@ -28,9 +28,7 @@ public class Offset implements Renderable {
 	public int distanceTo(Offset o2) {
 		Cube c1 = toCube();
 		Cube c2 = o2.toCube();
-		return Math.max(
-				Math.max(Math.abs(c1.x - c2.x),
-						Math.abs(c1.y - c2.y)),
+		return Math.max(Math.max(Math.abs(c1.x - c2.x), Math.abs(c1.y - c2.y)),
 				Math.abs(c1.z - c2.z));
 	}
 
@@ -44,10 +42,9 @@ public class Offset implements Renderable {
 	public Point toPoint() {
 		Arena arena = Arena.get();
 		boolean isOdd = top % 2 == 0;
-		int pointX = (int) (arena.getPosition().x + left
-				* arena.getCellSize() + (isOdd ? arena.getCellSize() / 2 : 0));
-		int pointY = (int) (arena.getPosition().y + top
-				* arena.getCellSize());
+		int pointX = (int) (arena.getPosition().x + left * arena.getCellSize() + (isOdd ? arena
+				.getCellSize() / 2 : 0));
+		int pointY = (int) (arena.getPosition().y + top * arena.getCellSize());
 
 		return new Point(pointX, pointY);
 	}
@@ -70,14 +67,14 @@ public class Offset implements Renderable {
 		Offset start = this;
 		Queue<OffsetSequenceItem> offsetQueue = new PriorityQueue<OffsetSequenceItem>(
 				10, new OffsetDistanceComparator(finish));
-		Map<Offset, Boolean> freeOffsets = getFreeOffsetsMap();
+		Set<Offset> processedOffsets = new TreeSet<Offset>();
 
 		OffsetSequenceItem item = new OffsetSequenceItem(start, null);
-		freeOffsets.put(start, false);
+		processedOffsets.add(start);
 		while (!item.getOffset().equals(finish)) {
 			List<Offset> neighbors = getNeighbors(item.getOffset());
 			for (Offset offset : neighbors) {
-				addOffsetToQueue(offsetQueue, freeOffsets, offset, item);
+				addOffsetToQueue(offsetQueue, processedOffsets, offset, item);
 			}
 			item = offsetQueue.poll();
 		}
@@ -96,39 +93,22 @@ public class Offset implements Renderable {
 	}
 
 	private static void addOffsetToQueue(Queue<OffsetSequenceItem> offsetQueue,
-			Map<Offset, Boolean> freeOffsets, Offset offset,
-			OffsetSequenceItem item) {
-		if (offset.isInArena() && freeOffsets.get(offset)) {
+			Set<Offset> processedOffsets, Offset offset, OffsetSequenceItem item) {
+		if (offset.isInArena() && !processedOffsets.contains(offset)) {
 			offsetQueue.add(new OffsetSequenceItem(offset, item));
-			freeOffsets.put(offset, false);
+			processedOffsets.add(offset);
 		}
 	}
 
 	private static List<Offset> getNeighbors(Offset offset) {
 		Cube cube = offset.toCube();
 		return Arrays.asList(new Offset[] {
-				new Cube(cube.x, cube.y + 1, cube.z - 1)
-						.toOffset(),
-				new Cube(cube.x + 1, cube.y, cube.z - 1)
-						.toOffset(),
-				new Cube(cube.x + 1, cube.y - 1, cube.z)
-						.toOffset(),
-				new Cube(cube.x, cube.y - 1, cube.z + 1)
-						.toOffset(),
-				new Cube(cube.x - 1, cube.y, cube.z + 1)
-						.toOffset(),
-				new Cube(cube.x - 1, cube.y + 1, cube.z)
-						.toOffset() });
-	}
-
-	private static Map<Offset, Boolean> getFreeOffsetsMap() {
-		Map<Offset, Boolean> result = new HashMap<Offset, Boolean>();
-		for (int i = 0; i < Arena.get().getHeight(); i++) {
-			for (int j = 0; j < Arena.get().getWidth(); j++) {
-				result.put(new Offset(j, i), true);
-			}
-		}
-		return result;
+				new Cube(cube.x, cube.y + 1, cube.z - 1).toOffset(),
+				new Cube(cube.x + 1, cube.y, cube.z - 1).toOffset(),
+				new Cube(cube.x + 1, cube.y - 1, cube.z).toOffset(),
+				new Cube(cube.x, cube.y - 1, cube.z + 1).toOffset(),
+				new Cube(cube.x - 1, cube.y, cube.z + 1).toOffset(),
+				new Cube(cube.x - 1, cube.y + 1, cube.z).toOffset() });
 	}
 
 	@Override
@@ -168,5 +148,5 @@ public class Offset implements Renderable {
 		g.fillRect((int) point.x, (int) point.y, arena.getCellSize(),
 				arena.getCellSize());
 	}
-	
+
 }
