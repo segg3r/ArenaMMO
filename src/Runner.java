@@ -1,13 +1,13 @@
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
-import by.segg3r.slicktest.SlickTestGame;
+import by.segg3r.slicktest.Game;
 
 public class Runner {
 
 	public static void main(String[] args) {
 		try {
-			SlickTestGame slickTestGame = new SlickTestGame("Test");
+			Game slickTestGame = new Game("Test");
 			AppGameContainer appGameContainer = new AppGameContainer(slickTestGame);
 			appGameContainer.setDisplayMode(800, 600, false);
 			

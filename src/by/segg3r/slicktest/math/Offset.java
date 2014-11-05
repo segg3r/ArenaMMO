@@ -1,20 +1,22 @@
 package by.segg3r.slicktest.math;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.newdawn.slick.Graphics;
 
+import by.segg3r.slicktest.Game;
 import by.segg3r.slicktest.logic.Arena;
+import by.segg3r.slicktest.logic.ArenaObject;
 import by.segg3r.slicktest.logic.Renderable;
 import by.segg3r.slicktest.math.paths.OffsetDistanceComparator;
 import by.segg3r.slicktest.math.paths.OffsetSequenceItem;
 
-public class Offset implements Renderable {
+public class Offset implements Renderable, Comparable<Offset> {
 
 	public int left;
 	public int top;
@@ -23,6 +25,14 @@ public class Offset implements Renderable {
 		super();
 		this.left = left;
 		this.top = top;
+	}
+
+	public Offset() {
+		this(0, 0);
+	}
+	
+	public Offset plus(Offset delta) {
+		return new Offset(left + delta.left, delta.top);
 	}
 
 	public int distanceTo(Offset o2) {
@@ -67,7 +77,7 @@ public class Offset implements Renderable {
 		Offset start = this;
 		Queue<OffsetSequenceItem> offsetQueue = new PriorityQueue<OffsetSequenceItem>(
 				10, new OffsetDistanceComparator(finish));
-		Set<Offset> processedOffsets = new TreeSet<Offset>();
+		Set<Offset> processedOffsets = getMaskedOffsets();
 
 		OffsetSequenceItem item = new OffsetSequenceItem(start, null);
 		processedOffsets.add(start);
@@ -90,6 +100,16 @@ public class Offset implements Renderable {
 		path.reverse();
 
 		return path;
+	}
+
+	private Set<Offset> getMaskedOffsets() {
+		Set<Offset> result = new HashSet<Offset>();
+		
+		for (ArenaObject arenaObject : Game.entities) {
+			result.addAll(arenaObject.getMask());
+		}
+		
+		return result;
 	}
 
 	private static void addOffsetToQueue(Queue<OffsetSequenceItem> offsetQueue,
@@ -147,6 +167,11 @@ public class Offset implements Renderable {
 		Point point = toPoint();
 		g.fillRect((int) point.x, (int) point.y, arena.getCellSize(),
 				arena.getCellSize());
+	}
+
+	@Override
+	public int compareTo(Offset o2) {
+		return this.equals(o2) ? 0 : -1;
 	}
 
 }

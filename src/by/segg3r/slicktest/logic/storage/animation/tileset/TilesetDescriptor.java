@@ -13,8 +13,8 @@ import org.newdawn.slick.SlickException;
 import by.segg3r.slicktest.logic.Sprite;
 import by.segg3r.slicktest.logic.storage.Descriptor;
 import by.segg3r.slicktest.logic.storage.RootDescriptor;
+import by.segg3r.slicktest.math.Offset;
 import by.segg3r.slicktest.math.Point;
-import by.segg3r.slicktest.math.Rectangle;
 
 public class TilesetDescriptor extends RootDescriptor<String, Sprite> {
 
@@ -40,10 +40,19 @@ public class TilesetDescriptor extends RootDescriptor<String, Sprite> {
 			br.readLine();
 			String line;
 
-			Image tilesetImage = new Image(path);
+			Image tilesetImage = new Image(path.substring(0,
+					path.lastIndexOf("\\") + 1)
+					+ getKey());
 
 			while ((line = br.readLine()) != null) {
 				String[] parameters = line.split(";");
+
+				List<Offset> mask = new ArrayList<Offset>();
+				for (int i = 7; i < parameters.length; i += 2) {
+					mask.add(new Offset(Integer.valueOf(parameters[i]), Integer
+							.valueOf(parameters[i + 1])));
+				}
+
 				result.add(new TileDescriptor(parameters[0], tilesetImage,
 						columnsNumber, rowsNumber, Integer
 								.parseInt(parameters[1]), Integer
@@ -51,11 +60,7 @@ public class TilesetDescriptor extends RootDescriptor<String, Sprite> {
 								.parseInt(parameters[3]), Integer
 								.parseInt(parameters[4]), new Point(Integer
 								.parseInt(parameters[5]), Integer
-								.parseInt(parameters[6])), new Rectangle(
-								Integer.valueOf(parameters[7]), Integer
-										.valueOf(parameters[8]), Integer
-										.valueOf(parameters[9]), Integer
-										.valueOf(parameters[10]))));
+								.parseInt(parameters[6])), mask));
 			}
 			br.close();
 			return result;

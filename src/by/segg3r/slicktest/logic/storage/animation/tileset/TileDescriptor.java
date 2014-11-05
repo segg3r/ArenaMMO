@@ -1,12 +1,14 @@
 package by.segg3r.slicktest.logic.storage.animation.tileset;
 
+import java.util.List;
+
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import by.segg3r.slicktest.logic.Sprite;
 import by.segg3r.slicktest.logic.storage.Descriptor;
+import by.segg3r.slicktest.math.Offset;
 import by.segg3r.slicktest.math.Point;
-import by.segg3r.slicktest.math.Rectangle;
 
 public class TileDescriptor extends Descriptor<String, Sprite> {
 
@@ -18,12 +20,12 @@ public class TileDescriptor extends Descriptor<String, Sprite> {
 	private Image image;
 	private int columnsNumber;
 	private int rowsNumber;
-	private Rectangle mask;
+	private List<Offset> mask;
 
 	public TileDescriptor(String key, Image image, int columnsNumber,
 			int rowsNumber, int startColumns, int startRows,
 			int imageColumnsNumber, int imageRowsNumber, Point offset,
-			Rectangle mask) {
+			List<Offset> mask) {
 		super(key);
 		this.columnsNumber = columnsNumber;
 		this.rowsNumber = rowsNumber;
@@ -111,12 +113,5 @@ public class TileDescriptor extends Descriptor<String, Sprite> {
 		this.rowsNumber = rowsNumber;
 	}
 
-	public Rectangle getMask() {
-		return mask;
-	}
-
-	public void setMask(Rectangle mask) {
-		this.mask = mask;
-	}
 
 }

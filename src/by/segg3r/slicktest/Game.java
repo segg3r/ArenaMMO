@@ -10,38 +10,47 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 import by.segg3r.slicktest.logic.Arena;
+import by.segg3r.slicktest.logic.ArenaObject;
+import by.segg3r.slicktest.logic.Entity;
 import by.segg3r.slicktest.logic.Renderable;
-import by.segg3r.slicktest.logic.Updatable;
 import by.segg3r.slicktest.logic.actions.ActionQueue;
 import by.segg3r.slicktest.logic.actions.PathAction;
 import by.segg3r.slicktest.logic.arenaobjects.Char;
+import by.segg3r.slicktest.logic.arenaobjects.StaticArenaObject;
 import by.segg3r.slicktest.logic.storage.animation.character.CharacterAnimationStorage;
+import by.segg3r.slicktest.logic.storage.animation.tileset.Tileset;
 import by.segg3r.slicktest.math.Line;
 import by.segg3r.slicktest.math.Offset;
 import by.segg3r.slicktest.math.Point;
 
-public class SlickTestGame extends BasicGame implements Renderable {
+public class Game extends BasicGame implements Renderable {
 
 	private CharacterAnimationStorage charactersAnimationStorage = new CharacterAnimationStorage(
 			"res\\img\\characters\\");
+	private Tileset grassTileset = new Tileset(
+			"res\\img\\tilesets\\tilesetDescriptor1.txt");
+	private StaticArenaObject cuttedTree;
 
 	private ActionQueue actionQueue;
 	private List<Renderable> renderables;
-	private List<Updatable> updatables;
+	public static List<ArenaObject> entities = new ArrayList<ArenaObject>();
 	private Offset activeOffset;
 	private Char character;
 
 	private Line line;
 
-	public SlickTestGame(String title) {
+	public Game(String title) {
 		super(title);
 		this.renderables = new ArrayList<Renderable>();
-		this.updatables = new ArrayList<Updatable>();
 	}
 
 	@Override
 	public void init(GameContainer gameContainer) throws SlickException {
 		charactersAnimationStorage.load();
+		grassTileset.load();
+		cuttedTree = new StaticArenaObject(new Offset(3, 3),
+				grassTileset.get("cutted_tree"));
+		entities.add(cuttedTree);
 
 		addRenderable(Arena.get());
 	}
@@ -57,6 +66,7 @@ public class SlickTestGame extends BasicGame implements Renderable {
 		}
 
 		render(g);
+		cuttedTree.render(g);
 	}
 
 	@Override
@@ -74,7 +84,7 @@ public class SlickTestGame extends BasicGame implements Renderable {
 				character = new Char(activeOffset,
 						charactersAnimationStorage.get("001-Fighter01"));
 				actionQueue = new ActionQueue(activeOffset);
-				updatables.add(character);
+				entities.add(character);
 				renderables.add(character);
 				renderables.add(actionQueue);
 			} else {
@@ -86,8 +96,8 @@ public class SlickTestGame extends BasicGame implements Renderable {
 			line = new Line(actionQueue.getLastOffset(), activeOffset);
 		}
 
-		for (Updatable updatable : updatables) {
-			updatable.update(delta / 1000.);
+		for (Entity entity : entities) {
+			entity.update(delta / 1000.);
 		}
 	}
 

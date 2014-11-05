@@ -1,34 +1,39 @@
 package by.segg3r.slicktest.logic;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 
+import by.segg3r.slicktest.math.Offset;
 import by.segg3r.slicktest.math.Point;
-import by.segg3r.slicktest.math.Rectangle;
 
 public class Sprite extends Animation {
 
 	private Point offset;
-	private Rectangle mask;
+	private List<Offset> mask;
 
 	public Sprite(SpriteSheet spriteSheet, int duration, Point offset) {
-		this(spriteSheet, duration, offset, new Rectangle(0, 0, 0, 0));
+		this(spriteSheet, duration, offset, Arrays
+				.asList(new Offset[] { new Offset() }));
 	}
 
 	public Sprite(SpriteSheet spriteSheet, int duration, Point offset,
-			Rectangle mask) {
+			List<Offset> mask) {
 		super(spriteSheet, duration);
 		this.offset = offset;
-		this.mask = mask;
+		this.setMask(mask);
 	}
 
 	public Sprite(Image tileImage, Point offset) {
-		this(tileImage, offset, new Rectangle(0, 0, 0, 0));
+		this(tileImage, offset, Arrays.asList(new Offset[] { new Offset() }));
 	}
 
-	public Sprite(Image tileImage, Point offset, Rectangle mask) {
-		this(new SpriteSheet(tileImage, 1, 1), 20, offset, mask);
+	public Sprite(Image tileImage, Point offset, List<Offset> mask) {
+		this(new SpriteSheet(tileImage, tileImage.getWidth(),
+				tileImage.getHeight()), 20, offset, mask);
 	}
 
 	@Override
@@ -44,11 +49,11 @@ public class Sprite extends Animation {
 		this.offset = offset;
 	}
 
-	public Rectangle getMask() {
+	public List<Offset> getMask() {
 		return mask;
 	}
 
-	public void setMask(Rectangle mask) {
+	public void setMask(List<Offset> mask) {
 		this.mask = mask;
 	}
 

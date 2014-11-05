@@ -1,18 +1,16 @@
 package by.segg3r.slicktest.logic;
 
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 
 import by.segg3r.slicktest.math.Point;
 
-
-public abstract class Entity implements Renderable, Updatable {
+public abstract class Entity implements Renderable {
 
 	private Point position;
 	private double direction;
 	private double speed;
-	private Animation animation;
-	
+	private Sprite sprite;
+
 	public Entity() {
 		super();
 	}
@@ -21,16 +19,15 @@ public abstract class Entity implements Renderable, Updatable {
 		super();
 		this.position = position;
 	}
-	
-	@Override
+
 	public void update(double delta) {
 		position.x += Math.cos(direction) * delta * speed;
 		position.y += Math.sin(direction) * delta * speed;
 	}
-	
+
 	@Override
 	public void render(Graphics g) {
-		animation.draw((float) position.x, (float) position.y);
+		sprite.draw((float) position.x, (float) position.y);
 	}
 
 	public double getDirection() {
@@ -48,13 +45,13 @@ public abstract class Entity implements Renderable, Updatable {
 	public void setSpeed(double speed) {
 		this.speed = speed;
 	}
-	
-	public Animation getAnimation() {
-		return animation;
+
+	public Sprite getSprite() {
+		return sprite;
 	}
 
-	public void setAnimation(Animation animation) {
-		this.animation = animation;
+	public void setSprite(Sprite sprite) {
+		this.sprite = sprite;
 	}
 
 	public Point getPosition() {
@@ -63,6 +60,6 @@ public abstract class Entity implements Renderable, Updatable {
 
 	public void setPosition(Point position) {
 		this.position = position;
-	}	
+	}
 
 }

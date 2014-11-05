@@ -15,7 +15,7 @@ public class Arena extends Entity {
 
 	public static Arena get() {
 		if (arena == null) {
-			arena = new Arena(new Point(20, 20), 10, 10, 20);
+			arena = new Arena(new Point(20, 20), 10, 10, 32);
 		}
 		return arena;
 	}

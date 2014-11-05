@@ -1,9 +1,9 @@
 package by.segg3r.slicktest.logic.arenaobjects;
 
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 
 import by.segg3r.slicktest.logic.ArenaObject;
+import by.segg3r.slicktest.logic.Sprite;
 import by.segg3r.slicktest.logic.actions.PathAction;
 import by.segg3r.slicktest.math.Offset;
 import by.segg3r.slicktest.math.Path;
@@ -16,9 +16,9 @@ public class Char extends ArenaObject {
 	private Point destination;
 	private PathAction pathAction;
 
-	public Char(Offset offset, Animation animation) {
+	public Char(Offset offset, Sprite sprite) {
 		super(offset);
-		this.setAnimation(animation);
+		this.setSprite(sprite);
 		this.destination = getPosition();
 	}
 
@@ -28,9 +28,9 @@ public class Char extends ArenaObject {
 		SideDirection sideDirection = SideDirection.fromDirection(direction);
 
 		if (getSpeed() == 0
-				|| getAnimation().getFrame() > sideDirection.getMaxImage()
-				|| getAnimation().getFrame() < sideDirection.getMinImage()) {
-			getAnimation().setCurrentFrame(sideDirection.getMinImage());
+				|| getSprite().getFrame() > sideDirection.getMaxImage()
+				|| getSprite().getFrame() < sideDirection.getMinImage()) {
+			getSprite().setCurrentFrame(sideDirection.getMinImage());
 		}
 
 		super.render(g);
@@ -52,7 +52,7 @@ public class Char extends ArenaObject {
 		}
 
 		if (!getPosition().equals(destination)) {
-			if (getPosition().distanceTo(destination) > getSpeed() / 1000.) {
+			if (getPosition().distanceTo(destination) > Math.max(getSpeed() / 1000., 1)) {
 				setDirection(getPosition().directionTo(destination));
 				setSpeed(60);
 			} else {
