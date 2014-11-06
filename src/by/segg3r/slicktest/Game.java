@@ -28,9 +28,8 @@ public class Game extends BasicGame implements Renderable {
 	private CharacterAnimationStorage charactersAnimationStorage = new CharacterAnimationStorage(
 			"res\\img\\characters\\");
 	private Tileset grassTileset = new Tileset(
-			"res\\img\\tilesets\\tilesetDescriptor1.txt");
-	private StaticArenaObject cuttedTree;
-
+			"res\\img\\tilesets\\grassland.txt");
+	
 	private ActionQueue actionQueue;
 	private List<Renderable> renderables;
 	public static List<ArenaObject> entities = new ArrayList<ArenaObject>();
@@ -48,9 +47,16 @@ public class Game extends BasicGame implements Renderable {
 	public void init(GameContainer gameContainer) throws SlickException {
 		charactersAnimationStorage.load();
 		grassTileset.load();
-		cuttedTree = new StaticArenaObject(new Offset(3, 3),
+		
+		StaticArenaObject cuttedTree = new StaticArenaObject(new Offset(3, 3),
 				grassTileset.get("cutted_tree"));
 		entities.add(cuttedTree);
+		renderables.add(cuttedTree);
+		
+		StaticArenaObject tree = new StaticArenaObject(new Offset(4, 0),
+				grassTileset.get("tree"));
+		entities.add(tree);
+		renderables.add(tree);
 
 		addRenderable(Arena.get());
 	}
@@ -66,7 +72,6 @@ public class Game extends BasicGame implements Renderable {
 		}
 
 		render(g);
-		cuttedTree.render(g);
 	}
 
 	@Override

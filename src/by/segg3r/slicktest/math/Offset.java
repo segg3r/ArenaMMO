@@ -81,7 +81,7 @@ public class Offset implements Renderable, Comparable<Offset> {
 
 		OffsetSequenceItem item = new OffsetSequenceItem(start, null, 0);
 		processedOffsets.add(start);
-		while (!item.getOffset().equals(finish)) {
+		while (item != null && !item.getOffset().equals(finish)) {
 			List<Offset> neighbors = getNeighbors(item.getOffset());
 			for (Offset offset : neighbors) {
 				addOffsetToQueue(offsetQueue, processedOffsets, offset, item);
