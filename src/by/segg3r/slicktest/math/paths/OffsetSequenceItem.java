@@ -6,11 +6,13 @@ public class OffsetSequenceItem {
 
 	private Offset offset;
 	private OffsetSequenceItem previousOffsetSequenceItem;
+	private double traversed;
 
-	public OffsetSequenceItem(Offset offset, OffsetSequenceItem item) {
+	public OffsetSequenceItem(Offset offset, OffsetSequenceItem item, double traversed) {
 		super();
 		this.offset = offset;
 		this.previousOffsetSequenceItem = item;
+		this.setTraversed(traversed);
 	}
 
 	public Offset getOffset() {
@@ -64,6 +66,14 @@ public class OffsetSequenceItem {
 	@Override
 	public String toString() {
 		return "OffsetSequenceItem [offset=" + offset + "]";
+	}
+
+	public double getTraversed() {
+		return traversed;
+	}
+
+	public void setTraversed(double traversed) {
+		this.traversed = traversed;
 	}
 	
 	

@@ -20,6 +20,7 @@ public class OffsetDistanceComparator implements Comparator<OffsetSequenceItem> 
 		Point p2 = o2.getOffset().toHalfPoint();
 		Point finishPoint = finish.toHalfPoint();
 
-		return (int) (p1.distanceTo(finishPoint) - p2.distanceTo(finishPoint));
+		return (int) (p1.distanceTo(finishPoint) + o1.getTraversed() - (p2
+				.distanceTo(finishPoint) + o2.getTraversed()));
 	}
 }

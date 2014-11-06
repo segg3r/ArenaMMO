@@ -30,7 +30,7 @@ public class Offset implements Renderable, Comparable<Offset> {
 	public Offset() {
 		this(0, 0);
 	}
-	
+
 	public Offset plus(Offset delta) {
 		return new Offset(left + delta.left, delta.top);
 	}
@@ -79,7 +79,7 @@ public class Offset implements Renderable, Comparable<Offset> {
 				10, new OffsetDistanceComparator(finish));
 		Set<Offset> processedOffsets = getMaskedOffsets();
 
-		OffsetSequenceItem item = new OffsetSequenceItem(start, null);
+		OffsetSequenceItem item = new OffsetSequenceItem(start, null, 0);
 		processedOffsets.add(start);
 		while (!item.getOffset().equals(finish)) {
 			List<Offset> neighbors = getNeighbors(item.getOffset());
@@ -104,18 +104,21 @@ public class Offset implements Renderable, Comparable<Offset> {
 
 	private Set<Offset> getMaskedOffsets() {
 		Set<Offset> result = new HashSet<Offset>();
-		
+
 		for (ArenaObject arenaObject : Game.entities) {
 			result.addAll(arenaObject.getMask());
 		}
-		
+
 		return result;
 	}
 
 	private static void addOffsetToQueue(Queue<OffsetSequenceItem> offsetQueue,
 			Set<Offset> processedOffsets, Offset offset, OffsetSequenceItem item) {
 		if (offset.isInArena() && !processedOffsets.contains(offset)) {
-			offsetQueue.add(new OffsetSequenceItem(offset, item));
+			offsetQueue.add(new OffsetSequenceItem(offset, item, item
+					.getTraversed()
+					+ item.getOffset().toHalfPoint()
+							.distanceTo(offset.toHalfPoint())));
 			processedOffsets.add(offset);
 		}
 	}
