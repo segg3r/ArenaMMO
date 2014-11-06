@@ -8,7 +8,8 @@ public class OffsetSequenceItem {
 	private OffsetSequenceItem previousOffsetSequenceItem;
 	private double traversed;
 
-	public OffsetSequenceItem(Offset offset, OffsetSequenceItem item, double traversed) {
+	public OffsetSequenceItem(Offset offset, OffsetSequenceItem item,
+			double traversed) {
 		super();
 		this.offset = offset;
 		this.previousOffsetSequenceItem = item;
@@ -36,8 +37,13 @@ public class OffsetSequenceItem {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((offset == null) ? 0 : offset.hashCode());
-		result = prime * result
-				+ ((previousOffsetSequenceItem == null) ? 0 : previousOffsetSequenceItem.hashCode());
+		result = prime
+				* result
+				+ ((previousOffsetSequenceItem == null) ? 0
+						: previousOffsetSequenceItem.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(traversed);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
 
@@ -58,14 +64,19 @@ public class OffsetSequenceItem {
 		if (previousOffsetSequenceItem == null) {
 			if (other.previousOffsetSequenceItem != null)
 				return false;
-		} else if (!previousOffsetSequenceItem.equals(other.previousOffsetSequenceItem))
+		} else if (!previousOffsetSequenceItem
+				.equals(other.previousOffsetSequenceItem))
+			return false;
+		if (Double.doubleToLongBits(traversed) != Double
+				.doubleToLongBits(other.traversed))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "OffsetSequenceItem [offset=" + offset + "]";
+		return "OffsetSequenceItem [offset=" + offset + ", traversed="
+				+ traversed + "]";
 	}
 
 	public double getTraversed() {
@@ -75,6 +86,5 @@ public class OffsetSequenceItem {
 	public void setTraversed(double traversed) {
 		this.traversed = traversed;
 	}
-	
-	
+
 }
