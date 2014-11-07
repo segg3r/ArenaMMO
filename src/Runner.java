@@ -8,9 +8,10 @@ public class Runner {
 	public static void main(String[] args) {
 		try {
 			Game slickTestGame = new Game("Test");
-			AppGameContainer appGameContainer = new AppGameContainer(slickTestGame);
-			appGameContainer.setDisplayMode(800, 600, false);
-			
+			AppGameContainer appGameContainer = new AppGameContainer(
+					slickTestGame);
+			appGameContainer.setDisplayMode(380, 350, false);
+
 			appGameContainer.start();
 		} catch (SlickException e) {
 			e.printStackTrace();

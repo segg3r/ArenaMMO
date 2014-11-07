@@ -53,6 +53,7 @@ public class Game extends BasicGame {
 	public void init(GameContainer gameContainer) throws SlickException {
 		charactersAnimationStorage.load();
 		grassTileset.load();
+		effectsStorage.load();
 
 		StaticArenaObject cuttedTree = new StaticArenaObject(new Offset(3, 3),
 				grassTileset.get("cutted_tree"));

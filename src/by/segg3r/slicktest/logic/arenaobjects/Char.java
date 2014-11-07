@@ -34,9 +34,6 @@ public class Char extends ArenaObject {
 		}
 
 		super.render(g);
-
-		g.drawString(String.valueOf(getDirection()), 5, 55);
-		g.drawString(SideDirection.fromDirection(0).toString(), 5, 75);
 	}
 
 	@Override
