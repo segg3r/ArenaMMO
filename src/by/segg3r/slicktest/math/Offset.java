@@ -89,6 +89,10 @@ public class Offset implements Renderable, Comparable<Offset> {
 			item = offsetQueue.poll();
 		}
 
+		if (item == null) { //path not found
+			return null;
+		}
+		
 		Path path = new Path();
 		do {
 			path.addOffset(item.getOffset());

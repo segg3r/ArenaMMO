@@ -1,8 +1,9 @@
 package by.segg3r.slicktest.logic.actions;
 
+import by.segg3r.slicktest.logic.Renderable;
 import by.segg3r.slicktest.math.Offset;
 
-public abstract class Action {
+public abstract class Action implements Renderable {
 
 	private ActionQueue queue;
 

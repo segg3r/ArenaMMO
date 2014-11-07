@@ -21,14 +21,11 @@ public class ActionQueue implements Renderable {
 
 	@Override
 	public void render(Graphics g) {
-		if (startedAction instanceof PathAction) {
-			((PathAction) startedAction).getFrom().pathTo(
-					((PathAction) startedAction).getTo()).render(g);
+		if (startedAction != null) {
+			startedAction.render(g);
 		}
 		for (Action action : queue) {
-			if (action instanceof PathAction) {
-				((PathAction) action).getFrom().pathTo(((PathAction) action).getTo()).render(g);
-			}
+			action.render(g);
 		}
 	}
 

@@ -21,6 +21,7 @@ import by.segg3r.slicktest.logic.storage.animation.character.CharacterAnimationS
 import by.segg3r.slicktest.logic.storage.animation.tileset.Tileset;
 import by.segg3r.slicktest.math.Line;
 import by.segg3r.slicktest.math.Offset;
+import by.segg3r.slicktest.math.Path;
 import by.segg3r.slicktest.math.Point;
 
 public class Game extends BasicGame implements Renderable {
@@ -29,7 +30,7 @@ public class Game extends BasicGame implements Renderable {
 			"res\\img\\characters\\");
 	private Tileset grassTileset = new Tileset(
 			"res\\img\\tilesets\\grassland.txt");
-	
+
 	private ActionQueue actionQueue;
 	private List<Renderable> renderables;
 	public static List<ArenaObject> entities = new ArrayList<ArenaObject>();
@@ -47,12 +48,12 @@ public class Game extends BasicGame implements Renderable {
 	public void init(GameContainer gameContainer) throws SlickException {
 		charactersAnimationStorage.load();
 		grassTileset.load();
-		
+
 		StaticArenaObject cuttedTree = new StaticArenaObject(new Offset(3, 3),
 				grassTileset.get("cutted_tree"));
 		entities.add(cuttedTree);
 		renderables.add(cuttedTree);
-		
+
 		StaticArenaObject tree = new StaticArenaObject(new Offset(4, 0),
 				grassTileset.get("tree"));
 		entities.add(tree);
@@ -93,8 +94,11 @@ public class Game extends BasicGame implements Renderable {
 				renderables.add(character);
 				renderables.add(actionQueue);
 			} else {
-				actionQueue.addAction(new PathAction(actionQueue, character,
-						activeOffset));
+				Path path = actionQueue.getLastOffset().pathTo(activeOffset);
+				if (path != null) {
+					actionQueue.addAction(new PathAction(actionQueue,
+							character, path));
+				}
 			}
 		}
 		if (character != null && activeOffset != null) {

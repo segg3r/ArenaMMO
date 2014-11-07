@@ -1,30 +1,36 @@
 package by.segg3r.slicktest.logic.actions;
 
+import org.newdawn.slick.Graphics;
+
 import by.segg3r.slicktest.logic.arenaobjects.Char;
 import by.segg3r.slicktest.math.Offset;
+import by.segg3r.slicktest.math.Path;
 
 public class PathAction extends Action {
 
 	private Char character;
-	private Offset from;
-	private Offset to;
+	private Path path;
 
-	public PathAction(ActionQueue queue, Char character, Offset to) {
+	public PathAction(ActionQueue queue, Char character, Path path) {
 		super(queue);
 		this.character = character;
-		this.from = queue.getLastOffset();
-		this.to = to;
+		this.path = path;
+	}
+	
+	@Override	
+	public void render(Graphics g) {
+		path.render(g);
 	}
 
 	@Override
 	public void start() {
-		character.setPath(from.pathTo(to));
+		character.setPath(path);
 		character.setPathAction(this);
 	}
 
 	@Override
 	public Offset getLastOffset() {
-		return to;
+		return path.getOffset(path.getSize() - 1);
 	}
 
 	public Char getCharacter() {
@@ -35,20 +41,12 @@ public class PathAction extends Action {
 		this.character = character;
 	}
 
-	public Offset getFrom() {
-		return from;
+	public Path getPath() {
+		return path;
 	}
 
-	public void setFrom(Offset from) {
-		this.from = from;
-	}
-
-	public Offset getTo() {
-		return to;
-	}
-
-	public void setTo(Offset to) {
-		this.to = to;
+	public void setPath(Path path) {
+		this.path = path;
 	}
 
 }
