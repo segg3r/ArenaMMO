@@ -14,6 +14,7 @@ public class Sprite extends Animation {
 
 	private Point offset;
 	private List<Offset> mask;
+	private String name;
 
 	public Sprite(SpriteSheet spriteSheet, int duration, Point offset) {
 		this(spriteSheet, duration, offset, Arrays
@@ -55,6 +56,19 @@ public class Sprite extends Animation {
 
 	public void setMask(List<Offset> mask) {
 		this.mask = mask;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "Sprite [name=" + name + "]";
 	}
 
 }

@@ -43,6 +43,8 @@ public class Char extends ArenaObject {
 	public void update(double delta) {
 		super.update(delta);
 
+		setOffset(getPosition().toOffset());
+
 		if (path != null) {
 			Offset currentPathOffset = path.getOffset(currentPathOffsetIndex);
 			Point currentPathPoint = currentPathOffset.toHalfPoint();
@@ -52,7 +54,8 @@ public class Char extends ArenaObject {
 		}
 
 		if (!getPosition().equals(destination)) {
-			if (getPosition().distanceTo(destination) > Math.max(getSpeed() / 1000., 1)) {
+			if (getPosition().distanceTo(destination) > Math.max(
+					getSpeed() / 1000., 1)) {
 				setDirection(getPosition().directionTo(destination));
 				setSpeed(60);
 			} else {

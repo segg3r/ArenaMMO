@@ -46,7 +46,9 @@ public class TileDescriptor extends Descriptor<String, Sprite> {
 		Image tileImage = image.getSubImage(columnWidth * startColumns,
 				rowHeight * startRows, columnWidth * imageColumnsNumber,
 				rowHeight * imageRowsNumber);
-		return new Sprite(tileImage, offset, mask);
+		Sprite sprite = new Sprite(tileImage, offset, mask);
+		sprite.setName(getKey());
+		return sprite;
 	}
 
 	public int getStartColumns() {

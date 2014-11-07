@@ -106,12 +106,15 @@ public class Game extends BasicGame {
 				}
 			}
 		}
-		if (character != null && activeOffset != null) {
+		if (character != null) {
 			if (line != null) {
 				renderables.remove(line);
 			}
-			renderables.add(line = new Line(actionQueue.getLastOffset(),
-					activeOffset));
+			line = activeOffset == null ? null : new Line(actionQueue.getLastOffset(),
+					activeOffset);
+			if (line != null) {
+				renderables.add(line);
+			}
 		}
 
 		for (Entity entity : entities) {
