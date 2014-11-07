@@ -5,10 +5,10 @@ import java.util.Queue;
 
 import org.newdawn.slick.Graphics;
 
-import by.segg3r.slicktest.logic.Renderable;
+import by.segg3r.slicktest.logic.UIObject;
 import by.segg3r.slicktest.math.Offset;
 
-public class ActionQueue implements Renderable {
+public class ActionQueue extends UIObject {
 
 	private Queue<Action> queue = new LinkedList<Action>();
 	private Offset lastOffset;

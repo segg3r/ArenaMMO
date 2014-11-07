@@ -6,9 +6,10 @@ import java.util.List;
 import org.newdawn.slick.Graphics;
 
 import by.segg3r.slicktest.logic.Arena;
-import by.segg3r.slicktest.logic.Renderable;
+import by.segg3r.slicktest.logic.Layer;
+import by.segg3r.slicktest.logic.UIObject;
 
-public class Circle implements Renderable {
+public class Circle extends UIObject {
 
 	private Offset offset;
 	private int radius;
@@ -59,6 +60,11 @@ public class Circle implements Renderable {
 			Point point = offset.toPoint();
 			g.fillRect((int) point.x, (int) point.y, arena.getCellSize(), arena.getCellSize());
 		}
+	}
+
+	@Override
+	public Layer getLayer() {
+		return Layer.UI;
 	}
 
 }

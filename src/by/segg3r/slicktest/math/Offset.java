@@ -12,11 +12,11 @@ import org.newdawn.slick.Graphics;
 import by.segg3r.slicktest.Game;
 import by.segg3r.slicktest.logic.Arena;
 import by.segg3r.slicktest.logic.ArenaObject;
-import by.segg3r.slicktest.logic.Renderable;
+import by.segg3r.slicktest.logic.UIObject;
 import by.segg3r.slicktest.math.paths.OffsetDistanceComparator;
 import by.segg3r.slicktest.math.paths.OffsetSequenceItem;
 
-public class Offset implements Renderable, Comparable<Offset> {
+public class Offset extends UIObject implements Comparable<Offset> {
 
 	public int left;
 	public int top;
@@ -32,7 +32,7 @@ public class Offset implements Renderable, Comparable<Offset> {
 	}
 
 	public Offset plus(Offset delta) {
-		return new Offset(left + delta.left, delta.top);
+		return new Offset(left + delta.left, top + delta.top);
 	}
 
 	public int distanceTo(Offset o2) {
@@ -89,10 +89,10 @@ public class Offset implements Renderable, Comparable<Offset> {
 			item = offsetQueue.poll();
 		}
 
-		if (item == null) { //path not found
+		if (item == null) { // path not found
 			return null;
 		}
-		
+
 		Path path = new Path();
 		do {
 			path.addOffset(item.getOffset());

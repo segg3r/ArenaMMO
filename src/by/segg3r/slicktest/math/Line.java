@@ -6,9 +6,9 @@ import java.util.List;
 import org.newdawn.slick.Graphics;
 
 import by.segg3r.slicktest.logic.Arena;
-import by.segg3r.slicktest.logic.Renderable;
+import by.segg3r.slicktest.logic.UIObject;
 
-public class Line implements Renderable {
+public class Line extends UIObject {
 
 	private Offset from;
 	private Offset to;
@@ -66,4 +66,5 @@ public class Line implements Renderable {
 	public void setTo(Offset to) {
 		this.to = to;
 	}
+
 }

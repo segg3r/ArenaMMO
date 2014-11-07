@@ -2,6 +2,8 @@ package by.segg3r.slicktest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
@@ -11,8 +13,10 @@ import org.newdawn.slick.SlickException;
 
 import by.segg3r.slicktest.logic.Arena;
 import by.segg3r.slicktest.logic.ArenaObject;
+import by.segg3r.slicktest.logic.Background;
 import by.segg3r.slicktest.logic.Entity;
 import by.segg3r.slicktest.logic.Renderable;
+import by.segg3r.slicktest.logic.RenderablePositionComparator;
 import by.segg3r.slicktest.logic.actions.ActionQueue;
 import by.segg3r.slicktest.logic.actions.PathAction;
 import by.segg3r.slicktest.logic.arenaobjects.Char;
@@ -24,7 +28,7 @@ import by.segg3r.slicktest.math.Offset;
 import by.segg3r.slicktest.math.Path;
 import by.segg3r.slicktest.math.Point;
 
-public class Game extends BasicGame implements Renderable {
+public class Game extends BasicGame {
 
 	private CharacterAnimationStorage charactersAnimationStorage = new CharacterAnimationStorage(
 			"res\\img\\characters\\");
@@ -32,7 +36,8 @@ public class Game extends BasicGame implements Renderable {
 			"res\\img\\tilesets\\grassland.txt");
 
 	private ActionQueue actionQueue;
-	private List<Renderable> renderables;
+	private Set<Renderable> renderables = new TreeSet<Renderable>(
+			new RenderablePositionComparator());
 	public static List<ArenaObject> entities = new ArrayList<ArenaObject>();
 	private Offset activeOffset;
 	private Char character;
@@ -41,7 +46,6 @@ public class Game extends BasicGame implements Renderable {
 
 	public Game(String title) {
 		super(title);
-		this.renderables = new ArrayList<Renderable>();
 	}
 
 	@Override
@@ -60,6 +64,13 @@ public class Game extends BasicGame implements Renderable {
 		renderables.add(tree);
 
 		addRenderable(Arena.get());
+		
+		Arena arena = Arena.get();
+		for (int i = 0; i < arena.getHeight(); i++) {
+			for (int j = 0; j < arena.getWidth(); j++) {
+				renderables.add(new Background(new Offset(j, i), grassTileset.get("grassBg")));
+			}
+		}
 	}
 
 	@Override
@@ -114,8 +125,7 @@ public class Game extends BasicGame implements Renderable {
 		this.renderables.add(renderable);
 	}
 
-	@Override
-	public void render(Graphics g) {
+	private void render(Graphics g) {
 		for (Renderable renderable : renderables) {
 			renderable.render(g);
 		}

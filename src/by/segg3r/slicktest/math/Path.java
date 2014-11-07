@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.newdawn.slick.Graphics;
 
-import by.segg3r.slicktest.logic.Renderable;
+import by.segg3r.slicktest.logic.UIObject;
 
-public class Path implements Renderable {
+public class Path extends UIObject {
 
 	private List<Offset> offsets = new ArrayList<Offset>();
 
@@ -34,8 +34,7 @@ public class Path implements Renderable {
 			Offset o2 = getOffset(i + 1);
 			Point p1 = o1.toHalfPoint();
 			Point p2 = o2.toHalfPoint();
-			g.drawLine((float) p1.x, (float) p1.y,
-					(float) p2.x, (float) p2.y);
+			g.drawLine((float) p1.x, (float) p1.y, (float) p2.x, (float) p2.y);
 		}
 	}
 

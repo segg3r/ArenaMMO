@@ -10,14 +10,20 @@ public abstract class Entity implements Renderable {
 	private double direction;
 	private double speed;
 	private Sprite sprite;
+	private Layer layer;
 
 	public Entity() {
 		super();
 	}
 
-	public Entity(Point position) {
+	public Entity(Point position, Layer layer) {
 		super();
 		this.position = position;
+		this.setLayer(layer);
+	}
+
+	public Entity(Point position) {
+		this(position, Layer.OBJECT);
 	}
 
 	public void update(double delta) {
@@ -60,6 +66,14 @@ public abstract class Entity implements Renderable {
 
 	public void setPosition(Point position) {
 		this.position = position;
+	}
+
+	public Layer getLayer() {
+		return layer;
+	}
+
+	public void setLayer(Layer layer) {
+		this.layer = layer;
 	}
 
 }
