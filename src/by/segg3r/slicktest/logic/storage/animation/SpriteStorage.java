@@ -7,12 +7,12 @@ import by.segg3r.slicktest.logic.storage.Descriptor;
 import by.segg3r.slicktest.logic.storage.RootDescriptor;
 import by.segg3r.slicktest.logic.storage.Storage;
 
-public abstract class AnimationStorage<T extends RootDescriptor<String, Sprite>>
+public abstract class SpriteStorage<T extends RootDescriptor<String, Sprite>>
 		extends Storage<String, Sprite> {
 
 	private static final long serialVersionUID = 1L;
 
-	public AnimationStorage(String path) {
+	public SpriteStorage(String path) {
 		super(path);
 	}
 

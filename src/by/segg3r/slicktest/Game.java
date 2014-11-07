@@ -21,7 +21,7 @@ import by.segg3r.slicktest.logic.actions.ActionQueue;
 import by.segg3r.slicktest.logic.actions.PathAction;
 import by.segg3r.slicktest.logic.arenaobjects.Char;
 import by.segg3r.slicktest.logic.arenaobjects.StaticArenaObject;
-import by.segg3r.slicktest.logic.storage.animation.character.CharacterAnimationStorage;
+import by.segg3r.slicktest.logic.storage.animation.character.AnimationStorage;
 import by.segg3r.slicktest.logic.storage.animation.tileset.Tileset;
 import by.segg3r.slicktest.math.Line;
 import by.segg3r.slicktest.math.Offset;
@@ -30,10 +30,11 @@ import by.segg3r.slicktest.math.Point;
 
 public class Game extends BasicGame {
 
-	private CharacterAnimationStorage charactersAnimationStorage = new CharacterAnimationStorage(
+	private AnimationStorage charactersAnimationStorage = new AnimationStorage(
 			"res\\img\\characters\\");
 	private Tileset grassTileset = new Tileset(
 			"res\\img\\tilesets\\grassland.txt");
+	private AnimationStorage effectsStorage = new AnimationStorage("res\\img\\effects\\");
 
 	private ActionQueue actionQueue;
 	private Set<Renderable> renderables = new TreeSet<Renderable>(

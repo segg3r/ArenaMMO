@@ -7,9 +7,9 @@ import java.io.InputStreamReader;
 
 import org.newdawn.slick.SlickException;
 
-import by.segg3r.slicktest.logic.storage.animation.AnimationStorage;
+import by.segg3r.slicktest.logic.storage.animation.SpriteStorage;
 
-public class Tileset extends AnimationStorage<TilesetDescriptor> {
+public class Tileset extends SpriteStorage<TilesetDescriptor> {
 
 	private static final long serialVersionUID = 1L;
 

@@ -8,7 +8,7 @@ import by.segg3r.slicktest.logic.Sprite;
 import by.segg3r.slicktest.logic.storage.Descriptor;
 import by.segg3r.slicktest.math.Point;
 
-public class CharacterAnimationDescriptor extends Descriptor<String, Sprite> {
+public class AnimationDescriptor extends Descriptor<String, Sprite> {
 
 	private String path;
 	private int columns;
@@ -16,7 +16,7 @@ public class CharacterAnimationDescriptor extends Descriptor<String, Sprite> {
 	private Point offset;
 	private int imageSpeed = 1;
 
-	public CharacterAnimationDescriptor(String path, String key, int columns,
+	public AnimationDescriptor(String path, String key, int columns,
 			int rows, Point offset, int imageSpeed) {
 		super(key);
 		this.path = path + "/" + key;
