@@ -3,6 +3,7 @@ package by.segg3r.slicktest.math;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import by.segg3r.slicktest.logic.Arena;
@@ -22,11 +23,13 @@ public class Line extends UIObject {
 	@Override
 	public void render(Graphics g) {
 		Arena arena = Arena.get();
+		g.setColor(new Color(255, 255, 255, 90));
 		for (Offset offset : getOffsets()) {
 			Point point = offset.toPoint();
 			g.fillRect((float) point.x, (float) point.y, arena.getCellSize(),
 					arena.getCellSize());
 		}
+		g.setColor(Color.white);
 	}
 
 	public List<Offset> getOffsets() {

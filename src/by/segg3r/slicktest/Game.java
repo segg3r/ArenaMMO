@@ -64,11 +64,12 @@ public class Game extends BasicGame {
 		renderables.add(tree);
 
 		addRenderable(Arena.get());
-		
+
 		Arena arena = Arena.get();
 		for (int i = 0; i < arena.getHeight(); i++) {
 			for (int j = 0; j < arena.getWidth(); j++) {
-				renderables.add(new Background(new Offset(j, i), grassTileset.get("grassBg")));
+				renderables.add(new Background(new Offset(j, i), grassTileset
+						.get("grassBg")));
 			}
 		}
 	}
@@ -76,13 +77,6 @@ public class Game extends BasicGame {
 	@Override
 	public void render(GameContainer gameContainer, Graphics g)
 			throws SlickException {
-		if (activeOffset != null) {
-			activeOffset.render(g);
-		}
-		if (line != null) {
-			line.render(g);
-		}
-
 		render(g);
 	}
 
@@ -113,7 +107,11 @@ public class Game extends BasicGame {
 			}
 		}
 		if (character != null && activeOffset != null) {
-			line = new Line(actionQueue.getLastOffset(), activeOffset);
+			if (line != null) {
+				renderables.remove(line);
+			}
+			renderables.add(line = new Line(actionQueue.getLastOffset(),
+					activeOffset));
 		}
 
 		for (Entity entity : entities) {
