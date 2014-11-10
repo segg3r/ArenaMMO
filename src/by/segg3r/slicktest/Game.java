@@ -27,6 +27,7 @@ import by.segg3r.slicktest.math.Line;
 import by.segg3r.slicktest.math.Offset;
 import by.segg3r.slicktest.math.Path;
 import by.segg3r.slicktest.math.Point;
+import by.segg3r.slicktest.math.Sector;
 
 public class Game extends BasicGame {
 
@@ -34,7 +35,8 @@ public class Game extends BasicGame {
 			"res\\img\\characters\\");
 	private Tileset grassTileset = new Tileset(
 			"res\\img\\tilesets\\grassland.txt");
-	private AnimationStorage effectsStorage = new AnimationStorage("res\\img\\effects\\");
+	private AnimationStorage effectsStorage = new AnimationStorage(
+			"res\\img\\effects\\");
 
 	private ActionQueue actionQueue;
 	private Set<Renderable> renderables = new TreeSet<Renderable>(
@@ -44,6 +46,7 @@ public class Game extends BasicGame {
 	private Char character;
 
 	private Line line;
+	private Sector sector;
 
 	public Game(String title) {
 		super(title);
@@ -112,10 +115,21 @@ public class Game extends BasicGame {
 			if (line != null) {
 				renderables.remove(line);
 			}
-			line = activeOffset == null ? null : new Line(actionQueue.getLastOffset(),
-					activeOffset);
+			line = activeOffset == null ? null : new Line(
+					actionQueue.getLastOffset(), activeOffset);
 			if (line != null) {
 				renderables.add(line);
+			}
+
+			if (sector != null) {
+				renderables.remove(sector);
+			}
+			sector = activeOffset == null ? null : new Sector(
+					actionQueue.getLastOffset(), 2, actionQueue.getLastOffset()
+							.toHalfPoint()
+							.directionTo(activeOffset.toHalfPoint()), Math.PI / 1.5);
+			if (sector != null) {
+				renderables.add(sector);
 			}
 		}
 
