@@ -15,6 +15,8 @@ public class Sprite extends Animation {
 	private Point offset;
 	private List<Offset> mask;
 	private String name;
+	private SpriteSheet spriteSheet;
+	private int duration;
 
 	public Sprite(SpriteSheet spriteSheet, int duration, Point offset) {
 		this(spriteSheet, duration, offset, Arrays
@@ -24,6 +26,8 @@ public class Sprite extends Animation {
 	public Sprite(SpriteSheet spriteSheet, int duration, Point offset,
 			List<Offset> mask) {
 		super(spriteSheet, duration);
+		this.spriteSheet = spriteSheet;
+		this.duration = duration;
 		this.offset = offset;
 		this.setMask(mask);
 	}
@@ -35,6 +39,10 @@ public class Sprite extends Animation {
 	public Sprite(Image tileImage, Point offset, List<Offset> mask) {
 		this(new SpriteSheet(tileImage, tileImage.getWidth(),
 				tileImage.getHeight()), 20, offset, mask);
+	}
+
+	public Sprite copy() {
+		return new Sprite(spriteSheet, duration, offset, mask);
 	}
 
 	@Override

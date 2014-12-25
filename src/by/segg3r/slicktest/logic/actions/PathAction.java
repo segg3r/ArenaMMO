@@ -21,9 +21,16 @@ public class PathAction extends Action {
 	public void render(Graphics g) {
 		path.render(g);
 	}
+	
 
 	@Override
+	public void renderAnimation() {
+		//empty
+	}
+	
+	@Override
 	public void start() {
+		super.start();
 		character.setPath(path);
 		character.setPathAction(this);
 	}
@@ -48,5 +55,6 @@ public class PathAction extends Action {
 	public void setPath(Path path) {
 		this.path = path;
 	}
+
 
 }

@@ -18,28 +18,17 @@ import by.segg3r.slicktest.logic.Entity;
 import by.segg3r.slicktest.logic.Renderable;
 import by.segg3r.slicktest.logic.RenderablePositionComparator;
 import by.segg3r.slicktest.logic.UIObject;
-import by.segg3r.slicktest.logic.actions.ActionFactory;
 import by.segg3r.slicktest.logic.actions.ActionPanel;
 import by.segg3r.slicktest.logic.actions.ActionQueue;
 import by.segg3r.slicktest.logic.actions.GameState;
-import by.segg3r.slicktest.logic.actions.PathAction;
 import by.segg3r.slicktest.logic.actions.PathActionFactory;
+import by.segg3r.slicktest.logic.actions.ShotActionFactory;
 import by.segg3r.slicktest.logic.arenaobjects.Char;
 import by.segg3r.slicktest.logic.arenaobjects.StaticArenaObject;
-import by.segg3r.slicktest.logic.storage.animation.character.AnimationStorage;
-import by.segg3r.slicktest.logic.storage.animation.tileset.Tileset;
 import by.segg3r.slicktest.math.Offset;
 import by.segg3r.slicktest.math.Point;
 
 public class Game extends BasicGame {
-
-	private AnimationStorage charactersAnimationStorage = new AnimationStorage(
-			"res\\img\\characters\\");
-	private Tileset grassTileset = new Tileset(
-			"res\\img\\tilesets\\grassland.txt");
-	private AnimationStorage effectsStorage = new AnimationStorage(
-			"res\\img\\effects\\");
-	private Tileset iconSet = new Tileset("res\\img\\tilesets\\iconset.txt");
 
 	private ActionQueue actionQueue;
 	private Set<Renderable> renderables = new TreeSet<Renderable>(
@@ -57,18 +46,15 @@ public class Game extends BasicGame {
 
 	@Override
 	public void init(GameContainer gameContainer) throws SlickException {
-		charactersAnimationStorage.load();
-		grassTileset.load();
-		effectsStorage.load();
-		iconSet.load();
+		Storages.init();
 
 		StaticArenaObject cuttedTree = new StaticArenaObject(new Offset(3, 3),
-				grassTileset.get("cutted_tree"));
+				Storages.GRASS_TILESET.get("cutted_tree"));
 		entities.add(cuttedTree);
 		renderables.add(cuttedTree);
 
 		StaticArenaObject tree = new StaticArenaObject(new Offset(4, 0),
-				grassTileset.get("tree"));
+				Storages.GRASS_TILESET.get("tree"));
 		entities.add(tree);
 		renderables.add(tree);
 
@@ -77,15 +63,18 @@ public class Game extends BasicGame {
 		Arena arena = Arena.get();
 		for (int i = 0; i < arena.getHeight(); i++) {
 			for (int j = 0; j < arena.getWidth(); j++) {
-				renderables.add(new Background(new Offset(j, i), grassTileset
-						.get("grassBg")));
+				renderables.add(new Background(new Offset(j, i),
+						Storages.GRASS_TILESET.get("grassBg")));
 			}
 		}
 
-		actionPanel = new ActionPanel(new Point(20, 350));
+		actionPanel = new ActionPanel(new Point(20, 350), 24);
 		renderables.add(actionPanel);
-		actionPanel.addActionFactory(new PathActionFactory(iconSet
+
+		actionPanel.addActionFactory(new PathActionFactory(Storages.ICON_SET
 				.get("stepAction")));
+		actionPanel.addActionFactory(new ShotActionFactory(Storages.ICON_SET
+				.get("shotAction")));
 	}
 
 	@Override
@@ -105,23 +94,27 @@ public class Game extends BasicGame {
 
 		GameState gameState = getGameState();
 
-		if (actionPanel.getActiveActionFactory() != null && actionPanel.getActiveActionFactory().isAppliable(gameState)) {
-			resetUIObject(actionPanel.getActiveActionFactory().getUIObject(gameState));
+		if (actionPanel.getActiveActionFactory() != null
+				&& actionPanel.getActiveActionFactory().isAppliable(gameState)) {
+			resetUIObject(actionPanel.getActiveActionFactory().getUIObject(
+					gameState));
 		} else {
 			resetUIObject(null);
 		}
-		
+
 		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)
 				&& activeOffset != null) {
 			if (character == null) {
 				character = new Char(activeOffset,
-						charactersAnimationStorage.get("001-Fighter01"));
+						Storages.CHARACTERS_ANIMATIONS.get("001-Fighter01"));
 				actionQueue = new ActionQueue(activeOffset);
 				entities.add(character);
 				renderables.add(character);
 				renderables.add(actionQueue);
 			} else {
-				if (actionPanel.getActiveActionFactory() != null && actionPanel.getActiveActionFactory().isAppliable(gameState)) {
+				if (actionPanel.getActiveActionFactory() != null
+						&& actionPanel.getActiveActionFactory().isAppliable(
+								gameState)) {
 					actionQueue.addAction(actionPanel.getActiveActionFactory()
 							.produceAction(gameState));
 				}
@@ -130,6 +123,8 @@ public class Game extends BasicGame {
 
 		if (input.isKeyPressed(Input.KEY_1)) {
 			actionPanel.setActionActionFactory(0);
+		} else if (input.isKeyPressed(Input.KEY_2)) {
+			actionPanel.setActionActionFactory(1);
 		}
 
 		for (Entity entity : entities) {
