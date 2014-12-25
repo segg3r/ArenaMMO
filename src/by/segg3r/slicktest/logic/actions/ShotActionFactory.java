@@ -2,6 +2,7 @@ package by.segg3r.slicktest.logic.actions;
 
 import by.segg3r.slicktest.logic.Sprite;
 import by.segg3r.slicktest.logic.UIObject;
+import by.segg3r.slicktest.logic.arenaobjects.Char;
 import by.segg3r.slicktest.math.Offset;
 import by.segg3r.slicktest.math.Sector;
 
@@ -13,13 +14,16 @@ public class ShotActionFactory extends ActionFactory {
 
 	@Override
 	public boolean isAppliable(GameState gameState) {
-		return gameState.getCharacter() != null
+		Char character = gameState.getCharacter();
+		return character != null
+				&& character.getEnergy().has(ShotAction.ENERGY_COST)				
 				&& gameState.getActiveOffset() != null
 				&& gameState.getActiveOffset().isInArena();
 	}
 
 	@Override
 	public Action produceAction(GameState gameState) {
+		gameState.getCharacter().getEnergy().reduce(ShotAction.ENERGY_COST);
 		return new ShotAction(gameState.getActionQueue(), createSector(gameState));
 	}
 

@@ -12,6 +12,7 @@ public class ShotAction extends Action {
 
 	public static final int RADIUS = 2;
 	public static final double SECTOR_SIZE = Math.PI / 2;
+	public static final double ENERGY_COST = 30;
 
 	private Sprite sprite;
 	private Sector sector;

@@ -20,13 +20,17 @@ public class PathActionFactory extends ActionFactory {
 	@Override
 	public Action produceAction(GameState gameState) {
 		return new PathAction(gameState.getActionQueue(),
-				gameState.getCharacter(), gameState.getActiveOffset());
+				gameState.getCharacter(), getLine(gameState).getLastOffset());
 	}
 
 	@Override
 	public UIObject getUIObject(GameState gameState) {
+		return getLine(gameState);
+	}
+	
+	private Line getLine(GameState gameState) {
 		return new Line(gameState.getActionQueue().getLastOffset(),
-				gameState.getActiveOffset());
+				gameState.getActiveOffset(), 2);
 	}
 
 }

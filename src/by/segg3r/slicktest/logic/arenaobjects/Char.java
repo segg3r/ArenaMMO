@@ -32,12 +32,16 @@ public class Char extends ArenaObject {
 	}
 	
 	private void initVitals() {
-		vitals.put(Vitals.HP, new Vital(100, 30));
-		vitals.put(Vitals.MP, new Vital(100, 24));
+		vitals.put(Vitals.HP, new Vital(100));
+		vitals.put(Vitals.MP, new Vital(100));
 	}
 	
 	public Vital getVital(Vitals vitals) {
 		return this.vitals.get(vitals);
+	}
+	
+	public Vital getEnergy() {
+		return this.vitals.get(Vitals.MP);
 	}
 
 	@Override
@@ -51,11 +55,12 @@ public class Char extends ArenaObject {
 			getSprite().setCurrentFrame(sideDirection.getMinImage());
 		}
 		
-		int maxIndicatorWidth = 335;		
-		g.drawString("HP:", 20, 390);
-		g.drawString("Energy:", 20, 430);
 		Vital hp = vitals.get(Vitals.HP);
 		Vital mp = vitals.get(Vitals.MP);
+		int maxIndicatorWidth = 335;		
+		g.drawString("HP: " + (int) hp.getCurrentValue() + "/" + (int) hp.getMaxValue(), 20, 390);
+		g.drawString("Energy: " + (int) mp.getCurrentValue() + "/" + (int) mp.getMaxValue(), 20, 430);
+
 		g.setColor(Color.red);
 		g.fillRect(20, 410, (int) (maxIndicatorWidth * hp.getCurrentValue() / hp.getMaxValue()), 15);
 		g.setColor(Color.orange);
@@ -69,10 +74,6 @@ public class Char extends ArenaObject {
 	@Override
 	public void update(double delta) {
 		super.update(delta);
-
-		for (Map.Entry<Vitals, Vital> entry : vitals.entrySet()) {
-			entry.getValue().update(delta);
-		}
 		
 		setOffset(getPosition().toOffset());
 

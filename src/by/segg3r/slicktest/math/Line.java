@@ -13,11 +13,21 @@ public class Line extends UIObject {
 
 	private Offset from;
 	private Offset to;
+	private int limit;
+	private boolean limited = false;
 
 	public Line(Offset from, Offset to) {
+		this(from, to, 0);
+	}
+	
+	public Line(Offset from, Offset to, int limit) {
 		super();
 		this.from = from;
 		this.to = to;
+		if (limit > 0) {
+			limited = true;
+			this.limit = limit;
+		}
 	}
 
 	@Override
@@ -42,7 +52,9 @@ public class Line extends UIObject {
 		if (distance == 0) {
 			result.add(from);
 		} else {
-			for (int i = 0; i <= distance; i++) {
+			int maxDistance = limited ? Math.min(limit, distance) : distance;
+			
+			for (int i = 0; i <= maxDistance; i++) {
 				Point offsetPoint = new Point(fromPoint.x
 						+ (double) (toPoint.x - fromPoint.x) / distance * i,
 						fromPoint.y + (double) (toPoint.y - fromPoint.y)
@@ -68,6 +80,11 @@ public class Line extends UIObject {
 
 	public void setTo(Offset to) {
 		this.to = to;
+	}
+
+	public Offset getLastOffset() {
+		List<Offset> offsets = getOffsets();
+		return offsets.get(offsets.size() - 1);
 	}
 
 }

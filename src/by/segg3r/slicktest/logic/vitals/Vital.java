@@ -4,18 +4,10 @@ public class Vital {
 	
 	private double currentValue;	
 	private double maxValue;
-	private double regenerationValue;
 	
-	public Vital(double maxValue, double regenerationValue) {
+	public Vital(double maxValue) {
 		this.maxValue = maxValue;
-		//this.currentValue = maxValue;
-		this.regenerationValue = regenerationValue;
-	}
-	
-	public Vital update(double d) {
-		double regenerated = d * regenerationValue;
-		add(regenerated);
-		return this;
+		this.currentValue = maxValue;
 	}
 	
 	public Vital add(double value) {
@@ -27,18 +19,21 @@ public class Vital {
 		this.maxValue = maxValue;
 		return this;
 	}
-	
-	public Vital setRegenerationValue(double regenerationValue) {
-		this.regenerationValue = regenerationValue;
-		return this;
-	}
-	
+
 	public double getCurrentValue() {
 		return this.currentValue;
 	}
 	
 	public double getMaxValue() {
 		return maxValue;
+	}
+
+	public boolean has(double value) {
+		return currentValue >= value;
+	}
+
+	public void reduce(double value) {
+		this.currentValue = Math.max(0, currentValue - value);
 	}
 	
 }
