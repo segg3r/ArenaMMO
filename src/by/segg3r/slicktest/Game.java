@@ -68,7 +68,7 @@ public class Game extends BasicGame {
 			}
 		}
 
-		actionPanel = new ActionPanel(new Point(20, 350), 24);
+		actionPanel = new ActionPanel(new Point(20, 350), 36);
 		renderables.add(actionPanel);
 
 		actionPanel.addActionFactory(new PathActionFactory(Storages.ICON_SET

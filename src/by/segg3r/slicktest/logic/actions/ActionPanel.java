@@ -3,10 +3,12 @@ package by.segg3r.slicktest.logic.actions;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import by.segg3r.slicktest.logic.Layer;
 import by.segg3r.slicktest.logic.Renderable;
+import by.segg3r.slicktest.logic.Sprite;
 import by.segg3r.slicktest.math.Point;
 
 public class ActionPanel implements Renderable {
@@ -50,8 +52,16 @@ public class ActionPanel implements Renderable {
 			}
 			
 			ActionFactory actionFactory = actionFactories.get(i);
-			actionFactory.getIcon()
-					.draw((float) position.x + i * cellSize, (float) position.y);
+			Sprite icon = actionFactory.getIcon();
+			int width = icon.getWidth();
+			int height = icon.getHeight();
+			
+			icon.draw((float) (position.x + (i + 0.5) * cellSize - width / 2.), (float) (position.y + cellSize * 0.5 - height / 2.));
+
+			Color numberColor = i == actionFactories.indexOf(activeActionFactory) ? Color.black : Color.white;
+			g.setColor(numberColor);
+			g.drawString("" + (i + 1), (int) (position.x + i * cellSize + 1), (int) (position.y));
+			g.setColor(Color.white);
 		}
 	}
 
