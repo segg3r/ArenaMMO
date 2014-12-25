@@ -10,7 +10,7 @@ public class Runner {
 			Game slickTestGame = new Game("Test");
 			AppGameContainer appGameContainer = new AppGameContainer(
 					slickTestGame);
-			appGameContainer.setDisplayMode(380, 400, false);
+			appGameContainer.setDisplayMode(380, 480, false);
 
 			appGameContainer.start();
 		} catch (SlickException e) {
