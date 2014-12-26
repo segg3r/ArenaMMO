@@ -14,7 +14,8 @@ public class PathActionFactory extends ActionFactory {
 	public boolean isAppliable(GameState gameState) {
 		return gameState.getCharacter() != null
 				&& gameState.getActiveOffset() != null
-				&& gameState.getActiveOffset().isInArena();
+				&& gameState.getActiveOffset().isInArena()
+				&& gameState.getActionQueue().getLastOffset().pathTo(gameState.getActiveOffset()) != null;
 	}
 
 	@Override
