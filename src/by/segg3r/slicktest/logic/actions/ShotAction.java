@@ -1,14 +1,12 @@
 package by.segg3r.slicktest.logic.actions;
 
-import org.newdawn.slick.Graphics;
-
 import by.segg3r.slicktest.Storages;
 import by.segg3r.slicktest.logic.Sprite;
 import by.segg3r.slicktest.math.Offset;
 import by.segg3r.slicktest.math.Point;
 import by.segg3r.slicktest.math.Sector;
 
-public class ShotAction extends Action {
+public class ShotAction extends AnimatedAction {
 
 	public static final int RADIUS = 2;
 	public static final double SECTOR_SIZE = Math.PI / 2;
@@ -21,11 +19,6 @@ public class ShotAction extends Action {
 	public ShotAction(ActionQueue actionQueue, Sector sector) {
 		super(actionQueue);
 		this.sector = sector;
-	}
-
-	@Override
-	public void render(Graphics g) {
-		
 	}
 
 	@Override

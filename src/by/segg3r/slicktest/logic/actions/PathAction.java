@@ -22,12 +22,6 @@ public class PathAction extends Action {
 		path.render(g);
 	}
 	
-
-	@Override
-	public void renderAnimation() {
-		//empty
-	}
-	
 	@Override
 	public void start() {
 		super.start();

@@ -36,6 +36,4 @@ public abstract class Action extends UIObject {
 		return Layer.ACTION;
 	}
 
-	public abstract void renderAnimation();
-
 }

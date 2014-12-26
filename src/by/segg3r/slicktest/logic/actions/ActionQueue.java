@@ -24,7 +24,6 @@ public class ActionQueue extends UIObject {
 	public void render(Graphics g) {
 		if (startedAction != null) {
 			startedAction.render(g);
-			startedAction.renderAnimation();
 		}
 		for (Action action : queue) {
 			action.render(g);
