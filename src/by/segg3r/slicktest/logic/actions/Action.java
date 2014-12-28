@@ -1,5 +1,7 @@
 package by.segg3r.slicktest.logic.actions;
 
+import org.newdawn.slick.Graphics;
+
 import by.segg3r.slicktest.logic.Layer;
 import by.segg3r.slicktest.logic.Sprite;
 import by.segg3r.slicktest.logic.UIObject;
@@ -18,6 +20,22 @@ public abstract class Action extends UIObject {
 		this.icon = icon;
 		this.queue = queue;
 		this.setApCost(apCost);
+	}
+	
+	public void drawActionForQueue(Graphics g, int drawX, int drawY, int cellSize, boolean active) {
+		Sprite icon = getIcon();
+		int width = icon.getWidth();
+		int height = icon.getHeight();
+
+		if (active) {
+			g.fillRect(drawX, drawY, cellSize, cellSize);
+		} else {
+			g.drawRect(drawX, drawY, cellSize, cellSize);
+		}
+
+		icon.draw((float) (drawX + (0.5) * cellSize - width / 2.),
+				(float) (drawY + cellSize * 0.5 - height / 2.));
+
 	}
 
 	public void start() {

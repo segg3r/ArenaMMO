@@ -8,7 +8,6 @@ import org.newdawn.slick.Graphics;
 
 import by.segg3r.slicktest.Game;
 import by.segg3r.slicktest.logic.Layer;
-import by.segg3r.slicktest.logic.Sprite;
 import by.segg3r.slicktest.logic.UIObject;
 import by.segg3r.slicktest.math.Offset;
 
@@ -52,10 +51,18 @@ public class ActionQueue extends UIObject {
 	}
 
 	public void startNextAction() {
-		Action action = queue.poll();
+		Action action = queue.peek();
 
 		if (action != null) {
-			if (queue.contains(lastAction) || action == lastAction) {
+			boolean containsTurnEnd = false;
+			for (Action queueAction : queue) {
+				if (queueAction.isWasLast()) {
+					containsTurnEnd = true;
+				}
+			}
+			
+			if (containsTurnEnd || action == lastAction) {
+				queue.poll();
 				action.start();
 				setStartedAction(action);
 			}
@@ -72,12 +79,7 @@ public class ActionQueue extends UIObject {
 		List<Action> list = (LinkedList<Action>) queue;
 
 		if (startedAction != null) {
-			Sprite icon = startedAction.getIcon();
-			int width = icon.getWidth();
-			int height = icon.getHeight();
-			g.fillRect(drawX, drawY, cellSize, cellSize);
-			icon.draw((float) (drawX + (0.5) * cellSize - width / 2.),
-					(float) (drawY + cellSize * 0.5 - height / 2.));
+			startedAction.drawActionForQueue(g, drawX, drawY, cellSize, true);
 			drawX += cellSize;
 
 			if (startedAction.isWasLast()) {
@@ -91,13 +93,7 @@ public class ActionQueue extends UIObject {
 				turnPoints += action.getApCost();
 			}
 
-			Sprite icon = action.getIcon();
-			int width = icon.getWidth();
-			int height = icon.getHeight();
-
-			g.drawRect(drawX, drawY, cellSize, cellSize);
-			icon.draw((float) (drawX + (0.5) * cellSize - width / 2.),
-					(float) (drawY + cellSize * 0.5 - height / 2.));
+			action.drawActionForQueue(g, drawX, drawY, cellSize, false);
 
 			drawX += cellSize;
 

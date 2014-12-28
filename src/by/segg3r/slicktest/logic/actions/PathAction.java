@@ -1,5 +1,6 @@
 package by.segg3r.slicktest.logic.actions;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import by.segg3r.slicktest.logic.Sprite;
@@ -19,10 +20,22 @@ public class PathAction extends Action {
 	}
 
 	@Override
+	public void drawActionForQueue(Graphics g, int drawX, int drawY,
+			int cellSize, boolean active) {
+		super.drawActionForQueue(g, drawX, drawY, cellSize, active);
+		if (path.getSize() - 1 > 1) {
+			Color textColor = active ? Color.black : Color.white;
+			g.setColor(textColor);
+			g.drawString("" + (path.getSize() - 1), drawX + 3, drawY + 1);
+			g.setColor(Color.white);
+		}
+	}
+
+	@Override
 	public void render(Graphics g) {
 		path.render(g);
 	}
-	
+
 	@Override
 	public void start() {
 		super.start();
@@ -50,6 +63,5 @@ public class PathAction extends Action {
 	public void setPath(Path path) {
 		this.path = path;
 	}
-
 
 }
