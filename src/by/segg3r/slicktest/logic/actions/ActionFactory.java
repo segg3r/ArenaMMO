@@ -6,7 +6,7 @@ import by.segg3r.slicktest.logic.UIObject;
 public abstract class ActionFactory {
 
 	private Sprite icon;
-
+	
 	public ActionFactory(Sprite icon) {
 		super();
 		this.setIcon(icon);

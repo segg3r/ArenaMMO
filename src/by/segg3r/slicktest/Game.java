@@ -20,6 +20,7 @@ import by.segg3r.slicktest.logic.RenderablePositionComparator;
 import by.segg3r.slicktest.logic.UIObject;
 import by.segg3r.slicktest.logic.actions.ActionPanel;
 import by.segg3r.slicktest.logic.actions.ActionQueue;
+import by.segg3r.slicktest.logic.actions.BigShotActionFactory;
 import by.segg3r.slicktest.logic.actions.GameState;
 import by.segg3r.slicktest.logic.actions.PathActionFactory;
 import by.segg3r.slicktest.logic.actions.ShotActionFactory;
@@ -77,6 +78,8 @@ public class Game extends BasicGame {
 				.get("stepAction")));
 		actionPanel.addActionFactory(new ShotActionFactory(Storages.ICON_SET
 				.get("shotAction")));
+		actionPanel.addActionFactory(new BigShotActionFactory(Storages.ICON_SET
+				.get("bigShotAction")));
 	}
 
 	@Override
@@ -127,6 +130,8 @@ public class Game extends BasicGame {
 			actionPanel.setActionActionFactory(0);
 		} else if (input.isKeyPressed(Input.KEY_2)) {
 			actionPanel.setActionActionFactory(1);
+		} else if (input.isKeyPressed(Input.KEY_3)) {
+			actionPanel.setActionActionFactory(2);
 		}
 
 		for (Entity entity : entities) {

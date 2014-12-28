@@ -1,3 +1,4 @@
 iconsetff7.png;16;20
 stepAction;6;17;1;1;0;0
 shotAction;12;5;1;1;0;0
+bigShotAction;2;2;1;1;0;0
