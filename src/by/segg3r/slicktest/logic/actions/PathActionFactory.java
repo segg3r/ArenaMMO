@@ -1,5 +1,6 @@
 package by.segg3r.slicktest.logic.actions;
 
+import by.segg3r.slicktest.Game;
 import by.segg3r.slicktest.logic.Sprite;
 import by.segg3r.slicktest.logic.UIObject;
 import by.segg3r.slicktest.math.Line;
@@ -14,6 +15,9 @@ public class PathActionFactory extends ActionFactory {
 	@Override
 	public boolean isAppliable(GameState gameState) {
 		if (gameState.getActiveOffset() == null || !gameState.getActiveOffset().isInArena())
+			return false;
+		
+		if (gameState.getActionQueue().getLastOffset().equals(gameState.getActiveOffset()))
 			return false;
 		
 		Path path = getPath(gameState);
@@ -32,7 +36,7 @@ public class PathActionFactory extends ActionFactory {
 		Path path = getPath(gameState);
 		
 		gameState.getCharacter().getActionPoints().reduce(path.getSize() - 1);
-		return new PathAction(gameState.getActionQueue(),
+		return new PathAction(getIcon(), gameState.getActionQueue(),
 				gameState.getCharacter(), path);
 	}
 
@@ -43,7 +47,7 @@ public class PathActionFactory extends ActionFactory {
 	
 	private Line getLine(GameState gameState) {
 		return new Line(gameState.getActionQueue().getLastOffset(),
-				gameState.getActiveOffset(), 3);
+				gameState.getActiveOffset(), Game.AP_PER_TURN);
 	}
 
 }

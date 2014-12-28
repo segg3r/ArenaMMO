@@ -17,8 +17,8 @@ public class ShotAction extends AnimatedAction {
 	private Sector sector;
 	private boolean looped;
 
-	public ShotAction(ActionQueue actionQueue, Sector sector) {
-		super(actionQueue, ACTION_COST);
+	public ShotAction(Sprite icon, ActionQueue actionQueue, Sector sector) {
+		super(icon, actionQueue, ACTION_COST);
 		this.sector = sector;
 	}
 

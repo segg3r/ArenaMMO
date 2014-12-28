@@ -2,6 +2,7 @@ package by.segg3r.slicktest.logic.actions;
 
 import org.newdawn.slick.Graphics;
 
+import by.segg3r.slicktest.logic.Sprite;
 import by.segg3r.slicktest.logic.arenaobjects.Char;
 import by.segg3r.slicktest.math.Offset;
 import by.segg3r.slicktest.math.Path;
@@ -11,8 +12,8 @@ public class PathAction extends Action {
 	private Char character;
 	private Path path;
 
-	public PathAction(ActionQueue queue, Char character, Path path) {
-		super(queue, path.getSize() - 1);
+	public PathAction(Sprite icon, ActionQueue queue, Char character, Path path) {
+		super(icon, queue, path.getSize() - 1);
 		this.character = character;
 		this.path = path;
 	}

@@ -33,7 +33,7 @@ public class ShotActionFactory extends SkillActionFactory {
 
 	@Override
 	public Action produceSkill(GameState gameState) {
-		return new ShotAction(gameState.getActionQueue(), createSector(gameState));
+		return new ShotAction(getIcon(), gameState.getActionQueue(), createSector(gameState));
 	}
 
 }

@@ -30,6 +30,8 @@ import by.segg3r.slicktest.math.Point;
 
 public class Game extends BasicGame {
 
+	public static final int AP_PER_TURN = 3;
+	
 	private ActionQueue actionQueue;
 	private Set<Renderable> renderables = new TreeSet<Renderable>(
 			new RenderablePositionComparator());

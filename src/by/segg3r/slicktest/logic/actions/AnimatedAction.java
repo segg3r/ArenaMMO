@@ -2,10 +2,12 @@ package by.segg3r.slicktest.logic.actions;
 
 import org.newdawn.slick.Graphics;
 
+import by.segg3r.slicktest.logic.Sprite;
+
 public abstract class AnimatedAction extends Action {
 
-	public AnimatedAction(ActionQueue queue, double apCost) {
-		super(queue, apCost);
+	public AnimatedAction(Sprite icon, ActionQueue queue, double apCost) {
+		super(icon, queue, apCost);
 	}
 
 	@Override
