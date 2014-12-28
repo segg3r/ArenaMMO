@@ -34,6 +34,7 @@ public class Char extends ArenaObject {
 	private void initVitals() {
 		vitals.put(Vitals.HP, new Vital(100));
 		vitals.put(Vitals.MP, new Vital(100));
+		vitals.put(Vitals.AP, new Vital(3));
 	}
 	
 	public Vital getVital(Vitals vitals) {
@@ -42,6 +43,10 @@ public class Char extends ArenaObject {
 	
 	public Vital getEnergy() {
 		return this.vitals.get(Vitals.MP);
+	}
+	
+	public Vital getActionPoints() {
+		return this.vitals.get(Vitals.AP);
 	}
 
 	@Override
@@ -57,14 +62,18 @@ public class Char extends ArenaObject {
 		
 		Vital hp = vitals.get(Vitals.HP);
 		Vital mp = vitals.get(Vitals.MP);
+		Vital ap = vitals.get(Vitals.AP);
 		int maxIndicatorWidth = 335;		
 		g.drawString("HP: " + (int) hp.getCurrentValue() + "/" + (int) hp.getMaxValue(), 20, 390);
 		g.drawString("Energy: " + (int) mp.getCurrentValue() + "/" + (int) mp.getMaxValue(), 20, 430);
+		g.drawString("Action points: " + (int) ap.getCurrentValue() + "/" + (int) ap.getMaxValue(), 20, 470);
 
 		g.setColor(Color.red);
 		g.fillRect(20, 410, (int) (maxIndicatorWidth * hp.getCurrentValue() / hp.getMaxValue()), 15);
 		g.setColor(Color.orange);
-		g.fillRect(20, 450, (int) (maxIndicatorWidth * mp.getCurrentValue() / hp.getMaxValue()), 15);
+		g.fillRect(20, 450, (int) (maxIndicatorWidth * mp.getCurrentValue() / mp.getMaxValue()), 15);
+		g.setColor(Color.white);
+		g.fillRect(20, 490, (int) (maxIndicatorWidth * ap.getCurrentValue() / ap.getMaxValue()), 15);
 		
 		g.setColor(Color.white);
 		
