@@ -41,7 +41,8 @@ public class ActionQueue extends UIObject {
 		if ((int) actionPoints % Game.AP_PER_TURN == 0) {
 			lastAction = action;
 			action.setWasLast(true);
-			Game.character.getActionPoints().add(3);
+			Game.character.getActionPoints().add(Game.AP_PER_TURN);
+			Game.character.getEnergy().add(50);
 		}
 		queue.add(action);
 		lastOffset = action.getLastOffset();
@@ -100,7 +101,7 @@ public class ActionQueue extends UIObject {
 			if (action.isWasLast()) {
 				drawX += turnGap;
 				pointBased = true;
-			} else if (pointBased && turnPoints == 3) {
+			} else if (pointBased && turnPoints == Game.AP_PER_TURN) {
 				turnPoints = 0;
 				drawX += turnGap;
 			}
