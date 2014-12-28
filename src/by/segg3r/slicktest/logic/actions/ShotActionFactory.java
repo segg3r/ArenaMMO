@@ -2,29 +2,20 @@ package by.segg3r.slicktest.logic.actions;
 
 import by.segg3r.slicktest.logic.Sprite;
 import by.segg3r.slicktest.logic.UIObject;
-import by.segg3r.slicktest.logic.arenaobjects.Char;
 import by.segg3r.slicktest.math.Offset;
 import by.segg3r.slicktest.math.Sector;
 
-public class ShotActionFactory extends ActionFactory {
+public class ShotActionFactory extends SkillActionFactory {
 
 	public ShotActionFactory(Sprite icon) {
-		super(icon);
+		super(icon, ShotAction.ENERGY_COST, ShotAction.ACTION_COST);
 	}
 
 	@Override
 	public boolean isAppliable(GameState gameState) {
-		Char character = gameState.getCharacter();
-		return character != null
-				&& character.getEnergy().has(ShotAction.ENERGY_COST)				
+		return super.isAppliable(gameState) 	
 				&& gameState.getActiveOffset() != null
 				&& gameState.getActiveOffset().isInArena();
-	}
-
-	@Override
-	public Action produceAction(GameState gameState) {
-		gameState.getCharacter().getEnergy().reduce(ShotAction.ENERGY_COST);
-		return new ShotAction(gameState.getActionQueue(), createSector(gameState));
 	}
 
 	@Override
@@ -38,6 +29,11 @@ public class ShotActionFactory extends ActionFactory {
 		double angle = offset.toHalfPoint().directionTo(gameState.getActiveOffset().toHalfPoint());
 		double sectorSize = ShotAction.SECTOR_SIZE;
 		return new Sector(offset, radius, angle, sectorSize);
+	}
+
+	@Override
+	public Action produceSkill(GameState gameState) {
+		return new ShotAction(gameState.getActionQueue(), createSector(gameState));
 	}
 
 }

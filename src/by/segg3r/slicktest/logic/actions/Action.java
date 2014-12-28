@@ -8,10 +8,12 @@ public abstract class Action extends UIObject {
 
 	private ActionQueue queue;
 	private boolean started;
+	private double apCost;
 
-	public Action(ActionQueue queue) {
+	public Action(ActionQueue queue, double apCost) {
 		super();
 		this.queue = queue;
+		this.apCost = apCost;
 	}
 
 	public void start() {

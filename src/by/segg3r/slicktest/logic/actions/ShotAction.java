@@ -11,13 +11,14 @@ public class ShotAction extends AnimatedAction {
 	public static final int RADIUS = 2;
 	public static final double SECTOR_SIZE = Math.PI / 2;
 	public static final double ENERGY_COST = 30;
+	public static final double ACTION_COST = 1;
 
 	private Sprite sprite;
 	private Sector sector;
 	private boolean looped;
 
 	public ShotAction(ActionQueue actionQueue, Sector sector) {
-		super(actionQueue);
+		super(actionQueue, ACTION_COST);
 		this.sector = sector;
 	}
 

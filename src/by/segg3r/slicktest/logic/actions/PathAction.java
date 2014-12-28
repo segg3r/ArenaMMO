@@ -11,10 +11,10 @@ public class PathAction extends Action {
 	private Char character;
 	private Path path;
 
-	public PathAction(ActionQueue queue, Char character, Offset activeOffset) {
-		super(queue);
+	public PathAction(ActionQueue queue, Char character, Path path) {
+		super(queue, path.getSize());
 		this.character = character;
-		this.path = queue.getLastOffset().pathTo(activeOffset);
+		this.path = path;
 	}
 
 	@Override

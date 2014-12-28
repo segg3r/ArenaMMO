@@ -4,8 +4,8 @@ import org.newdawn.slick.Graphics;
 
 public abstract class AnimatedAction extends Action {
 
-	public AnimatedAction(ActionQueue queue) {
-		super(queue);
+	public AnimatedAction(ActionQueue queue, double apCost) {
+		super(queue, apCost);
 	}
 
 	@Override
