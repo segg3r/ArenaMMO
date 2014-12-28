@@ -12,7 +12,7 @@ public class PathAction extends Action {
 	private Path path;
 
 	public PathAction(ActionQueue queue, Char character, Path path) {
-		super(queue, path.getSize());
+		super(queue, path.getSize() - 1);
 		this.character = character;
 		this.path = path;
 	}

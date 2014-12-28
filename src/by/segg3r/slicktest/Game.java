@@ -35,7 +35,7 @@ public class Game extends BasicGame {
 			new RenderablePositionComparator());
 	public static List<ArenaObject> entities = new ArrayList<ArenaObject>();
 	private Offset activeOffset;
-	private Char character;
+	public static Char character;
 
 	private ActionPanel actionPanel;
 	private UIObject uiObject;

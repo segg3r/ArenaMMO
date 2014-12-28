@@ -13,7 +13,7 @@ public abstract class Action extends UIObject {
 	public Action(ActionQueue queue, double apCost) {
 		super();
 		this.queue = queue;
-		this.apCost = apCost;
+		this.setApCost(apCost);
 	}
 
 	public void start() {
@@ -36,6 +36,14 @@ public abstract class Action extends UIObject {
 	@Override
 	public Layer getLayer() {
 		return Layer.ACTION;
+	}
+
+	public double getApCost() {
+		return apCost;
+	}
+
+	public void setApCost(double apCost) {
+		this.apCost = apCost;
 	}
 
 }
