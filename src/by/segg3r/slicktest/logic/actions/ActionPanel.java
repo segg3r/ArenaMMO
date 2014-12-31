@@ -6,12 +6,15 @@ import java.util.List;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import by.segg3r.slicktest.Game;
 import by.segg3r.slicktest.logic.Layer;
 import by.segg3r.slicktest.logic.Renderable;
 import by.segg3r.slicktest.logic.Sprite;
+import by.segg3r.slicktest.logic.listener.ActionListener;
+import by.segg3r.slicktest.logic.listener.ActionType;
 import by.segg3r.slicktest.math.Point;
 
-public class ActionPanel implements Renderable {
+public class ActionPanel implements Renderable, ActionListener {
 
 	private ActionFactory activeActionFactory;
 	private List<ActionFactory> actionFactories = new ArrayList<ActionFactory>();
@@ -22,6 +25,7 @@ public class ActionPanel implements Renderable {
 		super();
 		this.position = position;
 		this.cellSize = cellSize;
+		Game.addListener(ActionType.TURN_END, this);
 	}
 
 	public void addActionFactory(ActionFactory actionFactory) {
@@ -55,13 +59,23 @@ public class ActionPanel implements Renderable {
 			Sprite icon = actionFactory.getIcon();
 			int width = icon.getWidth();
 			int height = icon.getHeight();
-			
+		
 			icon.draw((float) (position.x + (i + 0.5) * cellSize - width / 2.), (float) (position.y + cellSize * 0.5 - height / 2.));
 
 			Color numberColor = i == actionFactories.indexOf(activeActionFactory) ? Color.black : Color.white;
 			g.setColor(numberColor);
 			g.drawString("" + (i + 1), (int) (position.x + i * cellSize + 1), (int) (position.y));
 			g.setColor(Color.white);
+
+			if (actionFactory.getCurrentCooldown() > 0) {
+				g.setColor(new Color(255, 255, 255, 225));
+				
+				g.fillRect((float) position.x + i * cellSize, (float) position.y, cellSize, cellSize);
+				g.setColor(Color.black);
+				g.drawString("" + actionFactory.getCurrentCooldown(), (float) (position.x + i * cellSize + 13), (float) (position.y + 10));
+				
+				g.setColor(Color.white);
+			}
 		}
 	}
 
@@ -73,6 +87,13 @@ public class ActionPanel implements Renderable {
 	@Override
 	public Point getPosition() {
 		return position;
+	}
+
+	@Override
+	public void perform(ActionType actionType, GameState gameState) {
+		for (ActionFactory factory : actionFactories) {
+			factory.perform(actionType, gameState);
+		}
 	}
 
 }

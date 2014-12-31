@@ -1,7 +1,9 @@
 package by.segg3r.slicktest;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -18,6 +20,7 @@ import by.segg3r.slicktest.logic.Entity;
 import by.segg3r.slicktest.logic.Renderable;
 import by.segg3r.slicktest.logic.RenderablePositionComparator;
 import by.segg3r.slicktest.logic.UIObject;
+import by.segg3r.slicktest.logic.actions.ActionFactory;
 import by.segg3r.slicktest.logic.actions.ActionPanel;
 import by.segg3r.slicktest.logic.actions.ActionQueue;
 import by.segg3r.slicktest.logic.actions.BigShotActionFactory;
@@ -26,25 +29,34 @@ import by.segg3r.slicktest.logic.actions.PathActionFactory;
 import by.segg3r.slicktest.logic.actions.ShotActionFactory;
 import by.segg3r.slicktest.logic.arenaobjects.Char;
 import by.segg3r.slicktest.logic.arenaobjects.StaticArenaObject;
+import by.segg3r.slicktest.logic.listener.ActionListener;
+import by.segg3r.slicktest.logic.listener.ActionType;
 import by.segg3r.slicktest.math.Offset;
 import by.segg3r.slicktest.math.Point;
 
-public class Game extends BasicGame {
+public class Game extends BasicGame implements ActionListener {
 
+	private static final Map<ActionType, List<ActionListener>> listeners = new HashMap<ActionType, List<ActionListener>>();
+	
 	public static final int AP_PER_TURN = 3;
+	public static final double ENERGY_PER_TURN = 40;
 	
 	private ActionQueue actionQueue;
 	private Set<Renderable> renderables = new TreeSet<Renderable>(
 			new RenderablePositionComparator());
 	public static List<ArenaObject> entities = new ArrayList<ArenaObject>();
 	private Offset activeOffset;
-	public static Char character;
+	private Char character;
 
 	private ActionPanel actionPanel;
 	private UIObject uiObject;
+	
+	private static Game instance;
 
 	public Game(String title) {
 		super(title);
+		instance = this;
+		addListener(ActionType.TURN_END, this);
 	}
 
 	@Override
@@ -117,10 +129,12 @@ public class Game extends BasicGame {
 				renderables.add(character);
 				renderables.add(actionQueue);
 			} else {
-				if (actionPanel.getActiveActionFactory() != null
-						&& actionPanel.getActiveActionFactory().isAppliable(
+				ActionFactory selectedActionFactory = actionPanel.getActiveActionFactory();
+				if (selectedActionFactory != null
+						&& selectedActionFactory.isAppliable(
 								gameState)) {
-					actionQueue.addAction(actionPanel.getActiveActionFactory()
+					
+					actionQueue.addAction(selectedActionFactory
 							.produceAction(gameState));
 				}
 			}
@@ -162,5 +176,31 @@ public class Game extends BasicGame {
 			renderable.render(g);
 		}
 	}
+	
+	public static void addListener(ActionType actionType, ActionListener listener) {
+		List<ActionListener> actionListeners = listeners.get(actionType);
+		if (actionListeners == null) {
+			actionListeners = new ArrayList<ActionListener>();
+			listeners.put(actionType, actionListeners);
+		}
+		
+		actionListeners.add(listener);
+	}
 
+	public static void on(ActionType actionType) {
+		List<ActionListener> actionListeners = listeners.get(actionType);
+		if (actionListeners != null) {
+			GameState gameState = instance.getGameState();
+			for (ActionListener actionListener : actionListeners) {
+				actionListener.perform(actionType, gameState);
+			}
+		}
+	}
+
+	@Override
+	public void perform(ActionType actionType, GameState gameState) {
+		character.getActionPoints().add(Game.AP_PER_TURN);
+		character.getEnergy().add(Game.ENERGY_PER_TURN);
+	}
+	
 }

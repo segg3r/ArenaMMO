@@ -9,6 +9,7 @@ import org.newdawn.slick.Graphics;
 import by.segg3r.slicktest.Game;
 import by.segg3r.slicktest.logic.Layer;
 import by.segg3r.slicktest.logic.UIObject;
+import by.segg3r.slicktest.logic.listener.ActionType;
 import by.segg3r.slicktest.math.Offset;
 
 public class ActionQueue extends UIObject {
@@ -41,8 +42,7 @@ public class ActionQueue extends UIObject {
 		if ((int) actionPoints % Game.AP_PER_TURN == 0) {
 			lastAction = action;
 			action.setWasLast(true);
-			Game.character.getActionPoints().add(Game.AP_PER_TURN);
-			Game.character.getEnergy().add(50);
+			Game.on(ActionType.TURN_END);
 		}
 		queue.add(action);
 		lastOffset = action.getLastOffset();
@@ -128,5 +128,5 @@ public class ActionQueue extends UIObject {
 	public Layer getLayer() {
 		return Layer.ACTION;
 	}
-
+	
 }
