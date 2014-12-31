@@ -1,5 +1,8 @@
 package by.segg3r.slicktest.logic.actions;
 
+import java.util.Arrays;
+import java.util.List;
+
 import by.segg3r.slicktest.logic.Sprite;
 import by.segg3r.slicktest.logic.UIObject;
 import by.segg3r.slicktest.math.Offset;
@@ -9,8 +12,14 @@ public class ShotActionFactory extends SkillActionFactory {
 
 	public ShotActionFactory(Sprite icon) {
 		super(icon, ShotAction.ENERGY_COST, ShotAction.ACTION_COST);
+		setName("Shot");
 	}
 
+	@Override
+	protected List<String> getDescriptions() {
+		return Arrays.asList(new String[] {"Deals damage in small sector"});
+	}
+	
 	@Override
 	public boolean isAppliable(GameState gameState) {
 		return super.isAppliable(gameState) 	

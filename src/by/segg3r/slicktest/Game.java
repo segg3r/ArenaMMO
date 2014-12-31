@@ -1,5 +1,6 @@
 package by.segg3r.slicktest;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -107,6 +109,7 @@ public class Game extends BasicGame implements ActionListener {
 		int mouseX = input.getMouseX();
 		int mouseY = input.getMouseY();
 		Point mousePoint = new Point(mouseX, mouseY);
+		actionPanel.updateMouseActionFactory(mouseX, mouseY);
 		activeOffset = mousePoint.isInArena() ? mousePoint.toOffset() : null;
 
 		GameState gameState = getGameState();

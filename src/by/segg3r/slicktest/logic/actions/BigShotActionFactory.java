@@ -1,5 +1,8 @@
 package by.segg3r.slicktest.logic.actions;
 
+import java.util.Arrays;
+import java.util.List;
+
 import by.segg3r.slicktest.logic.Sprite;
 import by.segg3r.slicktest.logic.UIObject;
 import by.segg3r.slicktest.math.Offset;
@@ -10,6 +13,12 @@ public class BigShotActionFactory extends SkillActionFactory {
 	public BigShotActionFactory(Sprite icon) {
 		super(icon, BigShotAction.COOLDOWN, BigShotAction.ENERGY_COST,
 				BigShotAction.ACTION_COST);
+		setName("Powerful shot");
+	}
+	
+	@Override
+	protected List<String> getDescriptions() {
+		return Arrays.asList(new String[] {"Powerful shot that deals damage in", "big sector"});
 	}
 
 	@Override

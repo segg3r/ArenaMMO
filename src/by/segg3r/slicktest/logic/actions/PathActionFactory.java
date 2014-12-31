@@ -1,5 +1,8 @@
 package by.segg3r.slicktest.logic.actions;
 
+import java.util.Arrays;
+import java.util.List;
+
 import by.segg3r.slicktest.Game;
 import by.segg3r.slicktest.logic.Sprite;
 import by.segg3r.slicktest.logic.UIObject;
@@ -10,6 +13,12 @@ public class PathActionFactory extends ActionFactory {
 
 	public PathActionFactory(Sprite icon) {
 		super(icon);
+		setName("Movement");
+	}
+	
+	@Override
+	protected List<String> getDescriptions() {
+		return Arrays.asList(new String[] {"Moves character by one cell per AP"});
 	}
 
 	@Override

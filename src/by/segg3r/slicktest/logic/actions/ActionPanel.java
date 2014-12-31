@@ -20,12 +20,24 @@ public class ActionPanel implements Renderable, ActionListener {
 	private List<ActionFactory> actionFactories = new ArrayList<ActionFactory>();
 	private Point position;
 	private int cellSize;
+	private ActionFactory mouseActionFactory;
 
 	public ActionPanel(Point position, int cellSize) {
 		super();
 		this.position = position;
 		this.cellSize = cellSize;
 		Game.addListener(ActionType.TURN_END, this);
+	}
+
+	public void updateMouseActionFactory(int mouseX, int mouseY) {
+		int xNumber = (mouseX - (int) position.x) / cellSize;
+
+		if (mouseX >= position.x && xNumber < actionFactories.size()
+				&& mouseY >= position.y && mouseY <= position.y + cellSize) {
+			mouseActionFactory = getActionFactory(xNumber);
+		} else {
+			mouseActionFactory = null;
+		}
 	}
 
 	public void addActionFactory(ActionFactory actionFactory) {
@@ -50,38 +62,50 @@ public class ActionPanel implements Renderable, ActionListener {
 	@Override
 	public void render(Graphics g) {
 		for (int i = 0; i < actionFactories.size(); i++) {
-			g.drawRect((float) position.x + i * cellSize, (float) position.y, cellSize, cellSize);
+			g.drawRect((float) position.x + i * cellSize, (float) position.y,
+					cellSize, cellSize);
 			if (i == actionFactories.indexOf(activeActionFactory)) {
-				g.fillRect((float) position.x + i * cellSize, (float) position.y, cellSize, cellSize);
+				g.fillRect((float) position.x + i * cellSize,
+						(float) position.y, cellSize, cellSize);
 			}
-			
+
 			ActionFactory actionFactory = actionFactories.get(i);
 			Sprite icon = actionFactory.getIcon();
 			int width = icon.getWidth();
 			int height = icon.getHeight();
-		
-			icon.draw((float) (position.x + (i + 0.5) * cellSize - width / 2.), (float) (position.y + cellSize * 0.5 - height / 2.));
 
-			Color numberColor = i == actionFactories.indexOf(activeActionFactory) ? Color.black : Color.white;
+			icon.draw((float) (position.x + (i + 0.5) * cellSize - width / 2.),
+					(float) (position.y + cellSize * 0.5 - height / 2.));
+
+			Color numberColor = i == actionFactories
+					.indexOf(activeActionFactory) ? Color.black : Color.white;
 			g.setColor(numberColor);
-			g.drawString("" + (i + 1), (int) (position.x + i * cellSize + 1), (int) (position.y));
+			g.drawString("" + (i + 1), (int) (position.x + i * cellSize + 1),
+					(int) (position.y));
 			g.setColor(Color.white);
 
 			if (actionFactory.getCurrentCooldown() > 0) {
 				g.setColor(new Color(255, 255, 255, 225));
-				
-				g.fillRect((float) position.x + i * cellSize, (float) position.y, cellSize, cellSize);
+
+				g.fillRect((float) position.x + i * cellSize,
+						(float) position.y, cellSize, cellSize);
 				g.setColor(Color.black);
-				g.drawString("" + actionFactory.getCurrentCooldown(), (float) (position.x + i * cellSize + 13), (float) (position.y + 10));
-				
+				g.drawString("" + actionFactory.getCurrentCooldown(),
+						(float) (position.x + i * cellSize + 13),
+						(float) (position.y + 10));
+
 				g.setColor(Color.white);
 			}
+		}
+		
+		if (mouseActionFactory != null) {
+			mouseActionFactory.renderDescription(g);
 		}
 	}
 
 	@Override
 	public Layer getLayer() {
-		return Layer.UI;
+		return Layer.ACTION_PANEL;
 	}
 
 	@Override

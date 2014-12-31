@@ -24,6 +24,12 @@ public abstract class SkillActionFactory extends ActionFactory {
 	public SkillActionFactory(Sprite icon, double mpCost, double apCost) {
 		this(icon, 0, mpCost, apCost);
 	}
+	
+	protected String getNameString() {
+		String result = super.getNameString();
+		result += "; E: " + costs.get(Vitals.MP).intValue() + "; AP: " + costs.get(Vitals.AP).intValue();
+		return result;
+	}
 
 	@Override
 	public boolean isAppliable(GameState gameState) {
