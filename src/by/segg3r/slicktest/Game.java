@@ -9,7 +9,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -28,6 +27,7 @@ import by.segg3r.slicktest.logic.actions.ActionQueue;
 import by.segg3r.slicktest.logic.actions.BigShotActionFactory;
 import by.segg3r.slicktest.logic.actions.DefenseActionFactory;
 import by.segg3r.slicktest.logic.actions.GameState;
+import by.segg3r.slicktest.logic.actions.PassAction;
 import by.segg3r.slicktest.logic.actions.PathActionFactory;
 import by.segg3r.slicktest.logic.actions.ShotActionFactory;
 import by.segg3r.slicktest.logic.arenaobjects.Char;
@@ -154,6 +154,10 @@ public class Game extends BasicGame implements ActionListener {
 			actionPanel.setActionActionFactory(2);
 		} else if (input.isKeyPressed(Input.KEY_4)) {
 			actionPanel.setActionActionFactory(3);
+		} else if (input.isKeyPressed(Input.KEY_SPACE)) {
+			double currentAp = character.getActionPoints().getCurrentValue();
+			character.getActionPoints().reduce(currentAp);
+			actionQueue.addAction(new PassAction(actionQueue, currentAp));
 		}
 
 

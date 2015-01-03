@@ -1,4 +1,5 @@
 + add skill cooldown
 + add skill description rendering
 	- split description strings by its length
-- add buffs and buffs rendering
++ add buffs and buffs rendering
+- pass action
