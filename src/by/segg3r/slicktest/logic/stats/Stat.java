@@ -1,4 +1,4 @@
-package by.segg3r.slicktest.stat;
+package by.segg3r.slicktest.logic.stats;
 
 import java.util.ArrayList;
 import java.util.List;

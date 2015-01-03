@@ -1,28 +1,37 @@
 package by.segg3r.slicktest.logic.arenaobjects;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import by.segg3r.slicktest.Game;
 import by.segg3r.slicktest.logic.ArenaObject;
 import by.segg3r.slicktest.logic.Sprite;
+import by.segg3r.slicktest.logic.actions.GameState;
 import by.segg3r.slicktest.logic.actions.PathAction;
+import by.segg3r.slicktest.logic.buffs.Buff;
+import by.segg3r.slicktest.logic.listener.ActionListener;
+import by.segg3r.slicktest.logic.listener.ActionType;
+import by.segg3r.slicktest.logic.stats.Stat;
+import by.segg3r.slicktest.logic.stats.Stats;
 import by.segg3r.slicktest.logic.vitals.Vital;
 import by.segg3r.slicktest.logic.vitals.Vitals;
 import by.segg3r.slicktest.math.Offset;
 import by.segg3r.slicktest.math.Path;
 import by.segg3r.slicktest.math.Point;
-import by.segg3r.slicktest.stat.Stat;
-import by.segg3r.slicktest.stat.Stats;
 
-public class Char extends ArenaObject {
+public class Char extends ArenaObject implements ActionListener {
 	
 	private Path path;
 	private int currentPathOffsetIndex;
 	private Point destination;
 	private PathAction pathAction;
+	private List<Buff> buffs = new ArrayList<Buff>();
 	
 	private Map<Vitals, Vital> vitals = new HashMap<Vitals, Vital>();
 	private Map<Stats, Stat> stats = new HashMap<Stats, Stat>();
@@ -33,7 +42,29 @@ public class Char extends ArenaObject {
 		this.destination = getPosition();
 		initVitals();
 		initStats();
+		Game.addListener(ActionType.TURN_END, this);
 	}
+	
+	public void addBuff(Buff buff) {
+		this.buffs.add(buff);
+		buff.apply(this);
+	}
+	
+
+	@Override
+	public void perform(ActionType actionType, GameState gameState) {
+		if (actionType == ActionType.TURN_END) {	
+			for (Iterator<Buff> iterator = buffs.iterator(); iterator.hasNext();) {
+				Buff buff = iterator.next();
+				buff.endTurn();
+				if (buff.getTurnsLeft() == 0) {
+					buff.remove(this);
+					iterator.remove();
+				}
+			}
+		}
+	}
+
 	
 	private void initVitals() {
 		vitals.put(Vitals.HP, new Vital(100));
@@ -74,6 +105,17 @@ public class Char extends ArenaObject {
 				|| getSprite().getFrame() > sideDirection.getMaxImage()
 				|| getSprite().getFrame() < sideDirection.getMinImage()) {
 			getSprite().setCurrentFrame(sideDirection.getMinImage());
+		}
+	
+		int cellSize = 36;
+		Point position = getPosition();
+		Point offset = getSprite().getOffset();
+		double buffY = position.y - offset.y - cellSize;
+		double buffX = position.x - buffs.size() * cellSize / 2.;
+		for (int i = 0; i < buffs.size(); i++) {
+			Buff buff = buffs.get(i);
+			Sprite buffIcon = buff.getIcon();
+			buff.getIcon().draw((float) (buffX + cellSize * (i + .5) - buffIcon.getWidth() / 2.), (float) (buffY + cellSize * .5 - buffIcon.getHeight() / 2.));
 		}
 		
 		Vital hp = vitals.get(Vitals.HP);

@@ -64,8 +64,8 @@ public class ActionQueue extends UIObject {
 			
 			if (containsTurnEnd || action == lastAction) {
 				queue.poll();
-				action.start();
 				setStartedAction(action);
+				action.start();
 			}
 		}
 	}

@@ -1,5 +1,4 @@
 + add skill cooldown
 + add skill description rendering
 	- split description strings by its length
-- translate in russian
 - add buffs and buffs rendering
