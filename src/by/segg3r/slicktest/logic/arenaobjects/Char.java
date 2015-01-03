@@ -14,6 +14,8 @@ import by.segg3r.slicktest.logic.vitals.Vitals;
 import by.segg3r.slicktest.math.Offset;
 import by.segg3r.slicktest.math.Path;
 import by.segg3r.slicktest.math.Point;
+import by.segg3r.slicktest.stat.Stat;
+import by.segg3r.slicktest.stat.Stats;
 
 public class Char extends ArenaObject {
 	
@@ -23,18 +25,32 @@ public class Char extends ArenaObject {
 	private PathAction pathAction;
 	
 	private Map<Vitals, Vital> vitals = new HashMap<Vitals, Vital>();
+	private Map<Stats, Stat> stats = new HashMap<Stats, Stat>();
 
 	public Char(Offset offset, Sprite sprite) {
 		super(offset);
 		this.setSprite(sprite);
 		this.destination = getPosition();
 		initVitals();
+		initStats();
 	}
 	
 	private void initVitals() {
 		vitals.put(Vitals.HP, new Vital(100));
 		vitals.put(Vitals.MP, new Vital(100));
 		vitals.put(Vitals.AP, new Vital(3));
+	}
+	
+	private void initStats() {
+		stats.put(Stats.DEFENSE, new Stat(1., true));
+	}
+	
+	public Stat getDefense() {
+		return this.stats.get(Stats.DEFENSE);
+	}
+	
+	public Stat getStat(Stats stats) {
+		return this.stats.get(stats);
 	}
 	
 	public Vital getVital(Vitals vitals) {

@@ -10,8 +10,8 @@ public class BigShotAction extends AnimatedAction {
 
 	public static final int RADIUS = 3;
 	public static final double SECTOR_SIZE = Math.PI / 3;
-	public static final double ENERGY_COST = 60;
-	public static final double ACTION_COST = 1;
+	public static final double ENERGY_COST = 75;
+	public static final double ACTION_COST = 2;
 	public static final int COOLDOWN = 2;
 
 	private Sprite sprite;

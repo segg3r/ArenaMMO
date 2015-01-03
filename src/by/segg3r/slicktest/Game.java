@@ -26,6 +26,7 @@ import by.segg3r.slicktest.logic.actions.ActionFactory;
 import by.segg3r.slicktest.logic.actions.ActionPanel;
 import by.segg3r.slicktest.logic.actions.ActionQueue;
 import by.segg3r.slicktest.logic.actions.BigShotActionFactory;
+import by.segg3r.slicktest.logic.actions.DefenseActionFactory;
 import by.segg3r.slicktest.logic.actions.GameState;
 import by.segg3r.slicktest.logic.actions.PathActionFactory;
 import by.segg3r.slicktest.logic.actions.ShotActionFactory;
@@ -94,6 +95,8 @@ public class Game extends BasicGame implements ActionListener {
 				.get("shotAction")));
 		actionPanel.addActionFactory(new BigShotActionFactory(Storages.ICON_SET
 				.get("bigShotAction")));
+		actionPanel.addActionFactory(new DefenseActionFactory(Storages.ICON_SET
+				.get("defenseAction")));
 	}
 
 	@Override
@@ -149,7 +152,10 @@ public class Game extends BasicGame implements ActionListener {
 			actionPanel.setActionActionFactory(1);
 		} else if (input.isKeyPressed(Input.KEY_3)) {
 			actionPanel.setActionActionFactory(2);
+		} else if (input.isKeyPressed(Input.KEY_4)) {
+			actionPanel.setActionActionFactory(3);
 		}
+
 
 		for (Entity entity : entities) {
 			entity.update(delta / 1000.);
